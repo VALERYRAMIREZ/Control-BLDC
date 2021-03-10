@@ -60,6 +60,17 @@ typedef struct
     uint8_t D[5];
 } motor;
 
+/*     Definción de parámetros globales para manejo del motor.                */
+
+extern uint16_t rEnc;               /* Variable para el tiempo muerto del PWM,
+                                     * la finalidad es evitar que dos
+                                     * transistores del mismo puente conduzcan
+                                     * al mmismo tiempo.                      */
+extern uint16_t tPWM;               /* Variable para almacenar el período del
+                                     * PWM.                                   */
+extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
+                                     * trabajo del PWM.                       */
+
 /*     Definición de funciones para el manejo de los datos introducidos en    */
 /*                      la configuración del sietema.                         */
 

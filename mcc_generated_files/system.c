@@ -53,7 +53,7 @@
 // CONFIG2
 #pragma config POSCMOD = NONE    //Primary Oscillator Select->Primary oscillator disabled
 #pragma config IOL1WAY = ON    //IOLOCK One-Way Set Enable bit->Write RP Registers Once
-#pragma config OSCIOFNC = OFF    //Primary Oscillator Output Function->OSCO functions as CLKO (FOSC/2)
+#pragma config OSCIOFNC = ON    //Primary Oscillator Output Function->OSCO functions as port I/O (RC15)
 #pragma config FCKSM = CSDCMD    //Clock Switching and Monitor->Both Clock Switching and Fail-safe Clock Monitor are disabled
 #pragma config FNOSC = FRCDIV    //Oscillator Select->Fast RC oscillator with Postscaler (FRCDIV)
 #pragma config IESO = OFF    //Internal External Switch Over Mode->IESO mode (Two-speed start-up)disabled
@@ -72,16 +72,26 @@
 #include "pin_manager.h"
 #include "clock.h"
 #include "system.h"
+#include "oc1.h"
+#include "oc5.h"
+#include "oc4.h"
+#include "oc3.h"
+#include "oc2.h"
+#include "oc6.h"
 #include "interrupt_manager.h"
 #include "traps.h"
-#include "oc1.h"
 
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
     CLOCK_Initialize();
     INTERRUPT_Initialize();
+    OC5_Initialize();
+    OC4_Initialize();
     OC1_Initialize();
+    OC3_Initialize();
+    OC2_Initialize();
+    OC6_Initialize();
 }
 
 /**

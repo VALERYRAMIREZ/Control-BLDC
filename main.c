@@ -46,66 +46,31 @@
   Section: Included Files
 */
 #include "mcc_generated_files/system.h"
-
+#include "mcc_generated_files/oc1.h"
+#include "mcc_generated_files/pin_manager.h"
+#include "globales.h"
+#include "mcc_generated_files/oc4.h"
 /*
                          Main application
  */
-#include <xc.h>
-#include <string.h>
-#include "globales.h"
-#include "sistema.h"
-#include "E_S.h"
-#include "temporizadores.h"
-#include "interrup.h"
-#include "mensajes.h"
-#include "LCD_44780.h"
-#include "botones.h"
 
 int main(void) {
-    extern SENALES senales;
-    char boton;
-    extern uint8_t selMenu;
-    Tipo_Osc(PROSC);
-    Confi_E_S();
-    Inicia_Interr();
-    Inicia_LCD4();
-    Ciclo_Timer1(10,0b0000000000000010);
-    PORTE = 0x08;
-    Inicia_Ciclo_Timer1();
-    senales.tecla = 0;                  /* Lo puedo llamar de esa forma porque*/
-    Posicion_Cur4b(1,0);                /* ya est? instanciada la union en    */
-    Menu();                             /* interup.c y al inicio de main se   */
-                                         /* instancia la estructura como una   */
-                                        /* variable externa.                  */
+    SYSTEM_Initialize();
+    rEnc = 2;
+    tPWM = 0x176f;
+    dPWM = 0xbb7;
+    HAB1_SetHigh();
+    HAB2_SetHigh();
+    HAB3_SetHigh();
+    OC1_SecondaryValueSet(tPWM);
+    OC1_PrimaryValueSet(dPWM-rEnc);
+    OC1_Start();
+    OC4_SecondaryValueSet(tPWM);
+    OC4_PrimaryValueSet(dPWM);
+    OC4_Start();
     while(1)
     {
-        tecladoAnt = PORTE;
-        if(senales.tecla)
-        {
-            boton = det_Tecla(teclado);
-            if(strcmp(&boton,"#") && !senales.nInterfaz)/* Se cambia la opci?n*/
-            {                               /* del men? seleccionado.         */
-                Selec_MenuS(boton);
-            }
-            else if(!strcmp(&boton,"#") && !senales.nInterfaz)/* Se accede al */
-            {                               /* men? secundario seleccionado.  */
-                Menu_S(selMenu);
-                senales.nInterfaz = 1;
-            }
-            else if(!strcmp(&boton,"*") && senales.nInterfaz)/* Se sale del   */
-            {                               /* men? secundario actual y se    */
-                Menu();                     /* vuelve al men? principal.      */
-                Selec_MenuS(boton);
-                senales.nInterfaz = 0;
-            }
-            else if(senales.nInterfaz)// && (selMenu == 1))/* Se permite que el  */
-            {                               /* cursor se mueva entre los      */
-                cpos_Menu_S(selMenu,(uint8_t) boton);/* par?metros a llenar   */
-            }                               /* del men? secundario 1          */
-            boton = 0;                      /* (configuraci?n del reloj).     */
-            senales.tecla = 0;    
-        }                               
+
     }
     return 0;
 }
-

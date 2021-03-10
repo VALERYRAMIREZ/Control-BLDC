@@ -14,6 +14,11 @@
         <itemPath>mcc_generated_files/pin_manager.h</itemPath>
         <itemPath>mcc_generated_files/oc1.h</itemPath>
         <itemPath>mcc_generated_files/system.h</itemPath>
+        <itemPath>mcc_generated_files/oc4.h</itemPath>
+        <itemPath>mcc_generated_files/oc2.h</itemPath>
+        <itemPath>mcc_generated_files/oc3.h</itemPath>
+        <itemPath>mcc_generated_files/oc5.h</itemPath>
+        <itemPath>mcc_generated_files/oc6.h</itemPath>
       </logicalFolder>
       <itemPath>E_S.h</itemPath>
       <itemPath>LCD_44780.h</itemPath>
@@ -24,6 +29,7 @@
       <itemPath>menu.h</itemPath>
       <itemPath>sistema.h</itemPath>
       <itemPath>temporizadores.h</itemPath>
+      <itemPath>motor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -42,6 +48,11 @@
         <itemPath>mcc_generated_files/clock.c</itemPath>
         <itemPath>mcc_generated_files/mcc.c</itemPath>
         <itemPath>mcc_generated_files/pin_manager.c</itemPath>
+        <itemPath>mcc_generated_files/oc4.c</itemPath>
+        <itemPath>mcc_generated_files/oc2.c</itemPath>
+        <itemPath>mcc_generated_files/oc3.c</itemPath>
+        <itemPath>mcc_generated_files/oc5.c</itemPath>
+        <itemPath>mcc_generated_files/oc6.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>E_S.c</itemPath>
@@ -53,6 +64,7 @@
       <itemPath>mensajes.c</itemPath>
       <itemPath>sistema.c</itemPath>
       <itemPath>temporizadores.c</itemPath>
+      <itemPath>motor.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -227,7 +239,7 @@
         <property key="mpreserve-all" value="false"/>
         <property key="oXC16glb-macros" value=""/>
         <property key="omit-pack-options" value="1"/>
-        <property key="output-file-format" value="elf"/>
+        <property key="output-file-format" value="coff"/>
         <property key="preserve-all" value="false"/>
         <property key="preserve-file" value=""/>
         <property key="relaxed-math" value="false"/>

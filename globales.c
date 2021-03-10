@@ -15,6 +15,16 @@ tiempo RTC;                             /* Estructura de tipo tiempo para
 motor PID;                              /* Estructura de tipo motot para
                                          * almacenar los datos del PID.       */
 
+/*      Declaración  de parámetros referentes al manejo del motor             */
+
+uint16_t rEnc;                      /* Variable para el tiempo muerto del PWM,
+                                     * la finalidad es evitar que dos
+                                     * transistores del mismo puente conduzcan
+                                     * al mmismo tiempo.                      */
+uint16_t tPWM;                      /* Variable para almacenar el período del
+                                     * PWM.                                   */
+uint16_t dPWM;                      /* Variable para almacenar el ciclo de
+                                     * trabajo del PWM.                       */
 
 char* Alma_RTC(uint8_t nParam_1, uint8_t dato_1)/* Función para el            */
 {                                       /* almacenamiento de los datos en la  */
