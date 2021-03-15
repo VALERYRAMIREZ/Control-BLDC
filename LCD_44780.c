@@ -2,6 +2,7 @@
 #include "temporizadores.h"
 #include "mensajes.h"
 #include "globales.h"
+#include "motor.h"
 #include <stdio.h>
 
 /*         Definición de variables para el uso interno de la librería.        */

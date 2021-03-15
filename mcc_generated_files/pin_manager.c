@@ -117,10 +117,10 @@ void PIN_MANAGER_Initialize (void)
 
     RPOR5bits.RP10R = 0x0014;    //RF4->OC3:OC3
     RPOR15bits.RP30R = 0x0017;    //RF2->OC6:OC6
-    RPOR8bits.RP16R = 0x0016;    //RF3->OC5:OC5
-    RPOR14bits.RP29R = 0x0015;    //RB15->OC4:OC4
-    RPOR8bits.RP17R = 0x0015;    //RF5->OC4:OC4
     RPOR7bits.RP14R = 0x0012;    //RB14->OC1:OC1
+    RPOR14bits.RP29R = 0x0013;    //RB15->OC2:OC2
+    RPOR8bits.RP16R = 0x0016;    //RF3->OC5:OC5
+    RPOR8bits.RP17R = 0x0015;    //RF5->OC4:OC4
 
     __builtin_write_OSCCONL(OSCCON | 0x40); // lock PPS
 }

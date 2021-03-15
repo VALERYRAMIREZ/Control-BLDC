@@ -53,23 +53,6 @@ typedef struct                          /* Estructura para almacenar la fecha */
     uint8_t segundo[3];
 } tiempo;
 
-typedef struct
-{
-    uint8_t P[5];
-    uint8_t I[5];
-    uint8_t D[5];
-} motor;
-
-/*     Definción de parámetros globales para manejo del motor.                */
-
-extern uint16_t rEnc;               /* Variable para el tiempo muerto del PWM,
-                                     * la finalidad es evitar que dos
-                                     * transistores del mismo puente conduzcan
-                                     * al mmismo tiempo.                      */
-extern uint16_t tPWM;               /* Variable para almacenar el período del
-                                     * PWM.                                   */
-extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
-                                     * trabajo del PWM.                       */
 
 /*     Definición de funciones para el manejo de los datos introducidos en    */
 /*                      la configuración del sietema.                         */
@@ -79,9 +62,6 @@ char* Alma_RTC(uint8_t nParam_1,uint8_t dato_1);/* Prototipo de función para el
                                              * las estructuras de configuración
                                              * del RTC.                       */
 
-char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
-                                             * almacenamiento de los datos en
-                                             * las estructuras de configuración
-                                             * del PID.                       */
+
 #endif	/* XC_GLOBALES_H */
 

@@ -49,30 +49,65 @@
 #define MAX_tension_cont    3.3     /* Máxima tensión permitida en la etapa de
                                      * control.                               */
 
-typedef enum                        /* Enumerador para asignar las fases que  */
-{                                   /* estarán encendidas segun la secuencia  */
-    AC = 0x03,                      /* necesaria. El motor girando en sentido */
-    BC = 0x06,                      /* contrario a las agujas del reloj, la   */
-    BA = 0x0c,                      /* letra de la derecha en las definiciones*/
-    CA = 0x18,                      /* del enumerador son la referencia actual*/
-    CB = 0x30,                      /* para esa secuencia. Para hacer girar el*/
-    AB = 0x21,                      /* motor en el sentido de las agujas del  */
-} motorFases;                       /* reloj cargar en sentido contrario.     */
+typedef enum                
+{
+    AC = 1,
+    BC = 2,
+    BA = 3,
+    CA = 4,
+    CB = 5,
+    AB = 6,
+    DD = 7,
+} eMotor;                           /* reloj cargar en sentido contrario.     */
 
 typedef union __attribute((packed)) /* Estructura declaración para los        */
 {                                   /* transistores de potencia.              */
     struct
     {
-        uint8_t restantes:2;
-        uint8_t T6:1;
-        uint8_t T5:1;
-        uint8_t T4:1;
-        uint8_t T3:1;
-        uint8_t T2:1;
         uint8_t T1:1;
+        uint8_t T2:1;
+        uint8_t T3:1;
+        uint8_t T4:1;
+        uint8_t T5:1;
+        uint8_t T6:1;
+        uint8_t restantes:2;
     };
     uint8_t Ts;
 } motorInt;
+
+typedef struct
+{
+    uint8_t sTipo;                  /* Tipo de motor: futura implementación.  */
+    uint8_t mId;                    /* Identificación: futura implementación. */
+    uint8_t rMax;                   /* Velocidad de giro máxima del motor.    */
+    uint8_t vMax;                   /* Tensión máxima o nominal del motor.    */
+    uint8_t cMax;                   /* Corriente máxima o nominal del motor.  */
+    uint8_t aPos;                   /* Posición actual del motor.             */
+    bool sDir;                      /* Sentido de giro del motor.             */
+//    void * S_Vel(uint16_t * rpm, bool * dir);/* Puntero a función para 
+//                                     * establecer la velocidad del motor.     */
+//    void * S_Pos(uint8_t * pos, bool * dir);/* Puntero a función para establecer
+//                                     * la posición del motor.                 */
+} tMotor;
+
+typedef struct
+{
+    uint8_t P[5];
+    uint8_t I[5];
+    uint8_t D[5];
+} motor;
+
+/*     Definción de parámetros globales para manejo del motor.                */
+
+extern uint16_t rEnc;               /* Variable para el tiempo muerto del PWM,
+                                     * la finalidad es evitar que dos
+                                     * transistores del mismo puente conduzcan
+                                     * al mmismo tiempo.                      */
+extern uint16_t tPWM;               /* Variable para almacenar el período del
+                                     * PWM.                                   */
+extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
+                                     * trabajo del PWM.                       */
+
 // Comment a function and leverage automatic documentation with slash star star
 /**
     <p><b>Function prototype: Establece la velocidad del motor. </b></p>
@@ -100,7 +135,23 @@ typedef union __attribute((packed)) /* Estructura declaración para los        */
  */
 // TODO Insert declarations or function prototypes (right here) to leverage 
 // live documentation
- void Motor_Vel(uint16_t rpm);
+
+
+
+void Motor_Sec(eMotor tEstado);
+
+char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
+                                             * almacenamiento de los datos en
+                                             * las estructuras de configuración
+                                             * del PID.                       */
+
+ void Motor_Vel(uint16_t rpm, bool dir);/* Prototipo de función para establecer
+                                         * la velocidad de giro y el sentido de
+                                         * giro del motor.                    */
+ 
+ void Motor_Pos(uint8_t pos, bool dir); /* Prototipo de función para establecer
+                                         * la posición que debe alcanzar la 
+                                         * flecha del motor.                  */
  
 #ifdef	__cplusplus
 extern "C" {

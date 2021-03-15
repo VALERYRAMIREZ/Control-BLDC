@@ -68,8 +68,8 @@ static uint16_t         gOC6Mode;
 
 void OC6_Initialize (void)
 {
-    // ENFLT0 disabled; OCSIDL disabled; OCM Off; OCFLT0 disabled; OCTSEL TMR2; TRIGMODE Only Software; 
-    OC6CON1 = 0x00;
+    // ENFLT0 disabled; OCSIDL disabled; OCM Off; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Only Software; 
+    OC6CON1 = 0x1C00;
     // SYNCSEL TMR2; TRIGSTAT disabled; OCINV disabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Cycle; FLTTRIEN disabled; 
     OC6CON2 = 0x0C;
     // CMP2B 0; 

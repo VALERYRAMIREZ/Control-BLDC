@@ -45,32 +45,56 @@
 /**
   Section: Included Files
 */
-#include "mcc_generated_files/system.h"
-#include "mcc_generated_files/oc1.h"
-#include "mcc_generated_files/pin_manager.h"
-#include "globales.h"
-#include "mcc_generated_files/oc4.h"
+#include "mcc_generated_files/mcc.h"
+#include "motor.h"
 /*
                          Main application
  */
+eMotor motorFase;
+
+bool sMotor;
+
+extern motorInt mRefInt;
 
 int main(void) {
     SYSTEM_Initialize();
+    INTERRUPT_Initialize();
     rEnc = 2;
-    tPWM = 0x176f;
+    tPWM = 0x1770;
     dPWM = 0xbb7;
     HAB1_SetHigh();
-    HAB2_SetHigh();
-    HAB3_SetHigh();
-    OC1_SecondaryValueSet(tPWM);
-    OC1_PrimaryValueSet(dPWM-rEnc);
-    OC1_Start();
-    OC4_SecondaryValueSet(tPWM);
-    OC4_PrimaryValueSet(dPWM);
-    OC4_Start();
+    motorFase = AC;
+    sMotor = true;
+    TMR2_Initialize();
+    TMR2_Start();
     while(1)
     {
-
+        
     }
     return 0;
+}
+
+void TMR2_CallBack(void)
+{
+    Motor_Sec(motorFase);
+    IFS0bits.T2IF = false;
+    switch(sMotor)
+    {
+        case false:
+        {
+            if((++motorFase) == DD)
+            {
+                motorFase = AC;
+            }   
+        }
+        break;
+        case true:
+        {
+            if((--motorFase) < AC)
+            {
+                motorFase = AB;
+            }               
+        }
+        break;
+    }
 }

@@ -19,16 +19,8 @@
         <itemPath>mcc_generated_files/oc3.h</itemPath>
         <itemPath>mcc_generated_files/oc5.h</itemPath>
         <itemPath>mcc_generated_files/oc6.h</itemPath>
+        <itemPath>mcc_generated_files/tmr2.h</itemPath>
       </logicalFolder>
-      <itemPath>E_S.h</itemPath>
-      <itemPath>LCD_44780.h</itemPath>
-      <itemPath>botones.h</itemPath>
-      <itemPath>globales.h</itemPath>
-      <itemPath>interrup.h</itemPath>
-      <itemPath>mensajes.h</itemPath>
-      <itemPath>menu.h</itemPath>
-      <itemPath>sistema.h</itemPath>
-      <itemPath>temporizadores.h</itemPath>
       <itemPath>motor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -53,17 +45,10 @@
         <itemPath>mcc_generated_files/oc3.c</itemPath>
         <itemPath>mcc_generated_files/oc5.c</itemPath>
         <itemPath>mcc_generated_files/oc6.c</itemPath>
+        <itemPath>mcc_generated_files/tmr2.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
-      <itemPath>E_S.c</itemPath>
-      <itemPath>LCD_44780.c</itemPath>
       <itemPath>README.md</itemPath>
-      <itemPath>botones.c</itemPath>
-      <itemPath>globales.c</itemPath>
-      <itemPath>interrup.c</itemPath>
-      <itemPath>mensajes.c</itemPath>
-      <itemPath>sistema.c</itemPath>
-      <itemPath>temporizadores.c</itemPath>
       <itemPath>motor.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
