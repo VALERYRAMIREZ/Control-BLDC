@@ -1,17 +1,17 @@
 /**
-  OC6 Generated Driver API Header File
+  OC9 Generated Driver API Header File
 
   @Company
     Microchip Technology Inc.
 
   @File Name
-    oc6.h
+    oc9.h
 
   @Summary
-    This is the generated header file for the OC6 driver using PIC24 / dsPIC33 / PIC32MM MCUs
+    This is the generated header file for the OC9 driver using PIC24 / dsPIC33 / PIC32MM MCUs
 
   @Description
-    This header file provides APIs for driver for OC6.
+    This header file provides APIs for driver for OC9.
     Generation Information :
         Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.169.0
         Device            :  PIC24FJ256GA106
@@ -42,8 +42,8 @@
     TERMS.
 */
 
-#ifndef _OC6_H
-#define _OC6_H
+#ifndef _OC9_H
+#define _OC9_H
 
 /**
   Section: Included Files
@@ -63,7 +63,7 @@
   Section: Data Types
 */
 
-/** OC6 Fault Number
+/** OC9 Fault Number
 
   @Summary
     Defines the fault number
@@ -78,8 +78,8 @@
 typedef enum
 {   
     /* Fault 0 */
-    OC6_FAULT0        /*DOM-IGNORE-BEGIN*/  = 0,/*DOM-IGNORE-END*/
-} OC6_FAULTS;
+    OC9_FAULT0        /*DOM-IGNORE-BEGIN*/  = 0,/*DOM-IGNORE-END*/
+} OC9_FAULTS;
 
 /**
   Section: Interface Routines
@@ -88,12 +88,12 @@ typedef enum
 
 /**
   @Summary
-    This function initializes OC instance : 6
+    This function initializes OC instance : 9
 
   @Description
-    This routine initializes the OC6 driver instance for : 6
+    This routine initializes the OC9 driver instance for : 9
     index, making it ready for clients to open and use it.
-    This routine must be called before any other OC6 routine is called.
+    This routine must be called before any other OC9 routine is called.
 	
   @Preconditions
     None.
@@ -110,41 +110,41 @@ typedef enum
     bool completeCycle = false;
     priVal = 0x1000;
     secVal = 0x2000;
-    OC6_FAULTS faultNum = OC6_FAULT0;
+    OC9_FAULTS faultNum = OC9_FAULT0;
 
-    OC6_Initialize();
+    OC9_Initialize();
     
-    OC6_CentreAlignedPWMConfig( priVal, secVal );
+    OC9_CentreAlignedPWMConfig( priVal, secVal );
   
-    OC6_Start();
+    OC9_Start();
 
     while(1)
     {
-        faultStat =  OC6_FaultStatusGet( faultNum );
+        faultStat =  OC9_FaultStatusGet( faultNum );
 
         if(faultStat)
         {
-            OC6_FaultStatusClear( faultNum );
+            OC9_FaultStatusClear( faultNum );
         }
 
-        completeCycle = OC6_IsCompareCycleComplete( void );
+        completeCycle = OC9_IsCompareCycleComplete( void );
         if(completeCycle)
         {
-            OC6_Stop();
+            OC9_Stop();
         }
     }
     </code>
 
 */
 
-void OC6_Initialize (void);
+void OC9_Initialize (void);
 
 /**
   @Summary
-    Callback for OC6.
+    Callback for OC9.
 
   @Description
-    This routine is callback for OC6
+    This routine is callback for OC9
 
   @Param
     None.
@@ -153,9 +153,9 @@ void OC6_Initialize (void);
     None
  
   @Example 
-	Refer to OC6_Initialize(); for an example
+	Refer to OC9_Initialize(); for an example
 */
-void OC6_CallBack(void);
+void OC9_CallBack(void);
 
 /**
   @Summary
@@ -178,14 +178,14 @@ void OC6_CallBack(void);
     <code>
     while (true)
     {
-        OC6_Tasks();
+        OC9_Tasks();
 
         // Do other tasks
     }
     </code>
     
 */
-void OC6_Tasks( void );
+void OC9_Tasks( void );
 
 /**
   @Summary
@@ -195,7 +195,7 @@ void OC6_Tasks( void );
     This routine enables the OC module with the corresponding operation mode.
 
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     None.
@@ -204,10 +204,10 @@ void OC6_Tasks( void );
     None.
 
   @Example 
-    Refer to OC6_Initialize() for an example	
+    Refer to OC9_Initialize() for an example	
  
 */
-void OC6_Start( void );
+void OC9_Start( void );
 
 /**
   @Summary
@@ -217,7 +217,7 @@ void OC6_Start( void );
     This routine disables the OC module.
 
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     None.
@@ -226,7 +226,7 @@ void OC6_Start( void );
     None.
 
 */
-void OC6_Stop( void );
+void OC9_Stop( void );
 
 /**
   @Summary
@@ -236,7 +236,7 @@ void OC6_Stop( void );
     This routine sets the primary compare value for respective OC.
 
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     priVal - 16 bit primary compare value.
@@ -248,11 +248,11 @@ void OC6_Stop( void );
   @Example 
     <code>
         uint16_t priVal = 0x1000;
-        OC6_PrimaryValueSet( uint16_t priVal);
+        OC9_PrimaryValueSet( uint16_t priVal);
     <code> 
  	
 */
-void OC6_PrimaryValueSet( uint16_t priVal);
+void OC9_PrimaryValueSet( uint16_t priVal);
 
 /**
   @Summary
@@ -262,7 +262,7 @@ void OC6_PrimaryValueSet( uint16_t priVal);
     This routine sets the Secondary compare value for respective OC.
 
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     secVal - 16 bit secondary compare value.
@@ -274,11 +274,11 @@ void OC6_PrimaryValueSet( uint16_t priVal);
   @Example 
     <code>
         uint16_t secVal = 0x1000;
-        OC6_SecondaryValueSet( uint16_t secVal);
+        OC9_SecondaryValueSet( uint16_t secVal);
     <code> 
  	
 */
-void OC6_SecondaryValueSet( uint16_t secVal);
+void OC9_SecondaryValueSet( uint16_t secVal);
 
 
 /**
@@ -289,7 +289,7 @@ void OC6_SecondaryValueSet( uint16_t secVal);
     This routine gets the status of the compare cycle completion.
 
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     None.
@@ -300,11 +300,11 @@ void OC6_SecondaryValueSet( uint16_t secVal);
     false : When the compare cycle has not completed. 
 
   @Example 
-    Refer to OC6_Initialize() for an example
+    Refer to OC9_Initialize() for an example
 	
 
 */
-bool OC6_IsCompareCycleComplete( void );
+bool OC9_IsCompareCycleComplete( void );
 
 /**
   @Summary
@@ -314,7 +314,7 @@ bool OC6_IsCompareCycleComplete( void );
     This routine gets the status of the PWM fault condition occurrence.
   
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     faultNum - The fault number
@@ -325,11 +325,11 @@ bool OC6_IsCompareCycleComplete( void );
     false : When the specified fault has not occurred.
 	
   @Example 
-    Refer to OC6_Initialize() for an example 
+    Refer to OC9_Initialize() for an example 
  
 
 */
-bool OC6_FaultStatusGet( OC6_FAULTS faultNum );
+bool OC9_FaultStatusGet( OC9_FAULTS faultNum );
 
 /**
   @Summary
@@ -348,10 +348,10 @@ bool OC6_FaultStatusGet( OC6_FAULTS faultNum );
     None.
 
   @Example 
-    Refer to OC6_Initialize() for an example 
+    Refer to OC9_Initialize() for an example 
   	
 */
-void OC6_FaultStatusClear( OC6_FAULTS faultNum );
+void OC9_FaultStatusClear( OC9_FAULTS faultNum );
 
 
 /**
@@ -362,7 +362,7 @@ void OC6_FaultStatusClear( OC6_FAULTS faultNum );
     This routine sets the manual trigger
 	
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 
   @Param
     None
@@ -371,10 +371,10 @@ void OC6_FaultStatusClear( OC6_FAULTS faultNum );
     None.
 	
   @Example 
-    Refer to OC6_TriggerStatusGet() for an example	
+    Refer to OC9_TriggerStatusGet() for an example	
  
 */
-void OC6_ManualTriggerSet( void );
+void OC9_ManualTriggerSet( void );
 
 /**
   @Summary
@@ -384,7 +384,7 @@ void OC6_ManualTriggerSet( void );
     This routine gets the status of the timer trigger source if it has been triggered.
 	
   @Preconditions
-    OC6_Initialize function should have been called 
+    OC9_Initialize function should have been called 
 	
   @Param
     None
@@ -396,13 +396,13 @@ void OC6_ManualTriggerSet( void );
 
   @Example 
     <\code>	
-    if(OC6_TriggerStatusGet())
+    if(OC9_TriggerStatusGet())
     {
-        OC6_TriggerStatusClear();
+        OC9_TriggerStatusClear();
     }
     <\code>	
 */
-bool OC6_TriggerStatusGet( void );
+bool OC9_TriggerStatusGet( void );
 
 /**
   @Summary
@@ -412,7 +412,7 @@ bool OC6_TriggerStatusGet( void );
     This routine clears the status of the timer trigger.
 	
   @Preconditions
-    OC6_Initialize function should have been called
+    OC9_Initialize function should have been called
 
   @Param
     None
@@ -421,10 +421,10 @@ bool OC6_TriggerStatusGet( void );
     None.
 	
   @Example 
-    Refer to OC6_TriggerStatusGet() for an example	
+    Refer to OC9_TriggerStatusGet() for an example	
 
 */
-void OC6_TriggerStatusClear( void );
+void OC9_TriggerStatusClear( void );
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -432,7 +432,7 @@ void OC6_TriggerStatusClear( void );
 
 #endif
 
-#endif //_OC6_H
+#endif //_OC9_H
     
 /**
  End of File

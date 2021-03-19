@@ -1,18 +1,18 @@
 
 /**
-  OC6 Generated Driver API Source File
+  OC9 Generated Driver API Source File
 
   @Company
     Microchip Technology Inc.
 
   @File Name
-    oc6.c
+    oc9.c
 
   @Summary
-    This is the generated source file for the OC6 driver using PIC24 / dsPIC33 / PIC32MM MCUs
+    This is the generated source file for the OC9 driver using PIC24 / dsPIC33 / PIC32MM MCUs
 
   @Description
-    This source file provides APIs for driver for OC6.
+    This source file provides APIs for driver for OC9.
     Generation Information :
         Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - 1.169.0
         Device            :  PIC24FJ256GA106
@@ -47,7 +47,7 @@
   Section: Included Files
 */
 
-#include "oc6.h"
+#include "oc9.h"
 
 /** OC Mode.
 
@@ -59,85 +59,85 @@
 
 */
 
-static uint16_t         gOC6Mode;
+static uint16_t         gOC9Mode;
 
 /**
   Section: Driver Interface
 */
 
 
-void OC6_Initialize (void)
+void OC9_Initialize (void)
 {
-    // ENFLT0 disabled; OCSIDL disabled; OCM Off; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Only Software; 
-    OC6CON1 = 0x1C00;
-    // SYNCSEL TMR2; TRIGSTAT disabled; OCINV disabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Cycle; FLTTRIEN disabled; 
-    OC6CON2 = 0x0C;
+    // ENFLT0 disabled; OCSIDL disabled; OCM Center-Aligned PWM mode; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Only Software; 
+    OC9CON1 = 0x1C07;
+    // SYNCSEL TMR2; TRIGSTAT disabled; OCINV enabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Cycle; FLTTRIEN disabled; 
+    OC9CON2 = 0x100C;
     // CMP2B 0; 
-    OC6RS = 0x00;
+    OC9RS = 0x00;
     // CMP1B 0; 
-    OC6R = 0x00;
-    // OC6TMR 0; 
-    OC6TMR = 0x00;
+    OC9R = 0x00;
+    // OC9TMR 0; 
+    OC9TMR = 0x00;
 	
-    gOC6Mode = OC6CON1bits.OCM;
+    gOC9Mode = OC9CON1bits.OCM;
 }
 
-void __attribute__ ((weak)) OC6_CallBack(void)
+void __attribute__ ((weak)) OC9_CallBack(void)
 {
     // Add your custom callback code here
 }
 
-void OC6_Tasks( void )
+void OC9_Tasks( void )
 {	
-    if(IFS2bits.OC6IF)
+    if(IFS5bits.OC9IF)
     {
-		// OC6 callback function 
-		OC6_CallBack();
-        IFS2bits.OC6IF = 0;
+		// OC9 callback function 
+		OC9_CallBack();
+        IFS5bits.OC9IF = 0;
     }
 }
 
 
 
-void OC6_Start( void )
+void OC9_Start( void )
 {
-    OC6CON1bits.OCM = gOC6Mode;
+    OC9CON1bits.OCM = gOC9Mode;
 }
 
 
-void OC6_Stop( void )
+void OC9_Stop( void )
 {
-    OC6CON1bits.OCM = 0;
+    OC9CON1bits.OCM = 0;
 }
 
-void OC6_SecondaryValueSet( uint16_t secVal )
-{
-   
-    OC6RS = secVal;
-}
-
-
-void OC6_PrimaryValueSet( uint16_t priVal )
+void OC9_SecondaryValueSet( uint16_t secVal )
 {
    
-    OC6R = priVal;
+    OC9RS = secVal;
 }
 
-bool OC6_IsCompareCycleComplete( void )
+
+void OC9_PrimaryValueSet( uint16_t priVal )
 {
-    return(IFS2bits.OC6IF);
+   
+    OC9R = priVal;
+}
+
+bool OC9_IsCompareCycleComplete( void )
+{
+    return(IFS5bits.OC9IF);
 }
 
 
-bool OC6_FaultStatusGet( OC6_FAULTS faultNum )
+bool OC9_FaultStatusGet( OC9_FAULTS faultNum )
 {
     bool status;
     /* Return the status of the fault condition */
    
     switch(faultNum)
     { 
-        case OC6_FAULT0:
-			status = OC6CON1bits.OCFLT0;
+        case OC9_FAULT0:
+			status = OC9CON1bits.OCFLT0;
             break;
         default :
             break;
@@ -147,13 +147,13 @@ bool OC6_FaultStatusGet( OC6_FAULTS faultNum )
 }
 
 
-void OC6_FaultStatusClear( OC6_FAULTS faultNum )
+void OC9_FaultStatusClear( OC9_FAULTS faultNum )
 {
     
     switch(faultNum)
     { 
-        case OC6_FAULT0:
-			OC6CON1bits.OCFLT0 = 0;
+        case OC9_FAULT0:
+			OC9CON1bits.OCFLT0 = 0;
                 break;
         default :
                 break;
@@ -161,21 +161,21 @@ void OC6_FaultStatusClear( OC6_FAULTS faultNum )
 }
 
 
-void OC6_ManualTriggerSet( void )
+void OC9_ManualTriggerSet( void )
 {
-    OC6CON2bits.TRIGSTAT= true; 
+    OC9CON2bits.TRIGSTAT= true; 
 }
 
-bool OC6_TriggerStatusGet( void )
+bool OC9_TriggerStatusGet( void )
 {
-    return( OC6CON2bits.TRIGSTAT );
+    return( OC9CON2bits.TRIGSTAT );
 }
 
 
-void OC6_TriggerStatusClear( void )
+void OC9_TriggerStatusClear( void )
 {
     /* Clears the trigger status */
-    OC6CON2bits.TRIGSTAT = 0;
+    OC9CON2bits.TRIGSTAT = 0;
 }
 
 /**

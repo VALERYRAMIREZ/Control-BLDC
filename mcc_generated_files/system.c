@@ -72,28 +72,28 @@
 #include "pin_manager.h"
 #include "clock.h"
 #include "system.h"
-#include "tmr2.h"
+#include "oc9.h"
 #include "oc5.h"
 #include "oc4.h"
 #include "oc3.h"
 #include "oc2.h"
 #include "oc1.h"
-#include "oc6.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "tmr2.h"
 
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
-    INTERRUPT_Initialize();
     CLOCK_Initialize();
+    INTERRUPT_Initialize();
     OC5_Initialize();
     OC4_Initialize();
     OC1_Initialize();
     OC3_Initialize();
     OC2_Initialize();
     TMR2_Initialize();
-    OC6_Initialize();
+    OC9_Initialize();
 }
 
 /**

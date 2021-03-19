@@ -51,15 +51,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "tmr2.h"
+#include "oc9.h"
 #include "oc5.h"
 #include "oc4.h"
 #include "oc3.h"
 #include "oc2.h"
 #include "oc1.h"
-#include "oc6.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "tmr2.h"
 
 #warning "This file will be removed in future MCC releases. Use system.h instead."
 

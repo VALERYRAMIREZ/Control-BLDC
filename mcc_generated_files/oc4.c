@@ -68,10 +68,10 @@ static uint16_t         gOC4Mode;
 
 void OC4_Initialize (void)
 {
-    // ENFLT0 disabled; OCSIDL disabled; OCM Edge-Aligned PWM mode; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Only Software; 
-    OC4CON1 = 0x1C06;
-    // SYNCSEL TMR2; TRIGSTAT disabled; OCINV disabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Cycle; FLTTRIEN disabled; 
-    OC4CON2 = 0x0C;
+    // ENFLT0 disabled; OCSIDL disabled; OCM Center-Aligned PWM mode; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Only Software; 
+    OC4CON1 = 0x1C07;
+    // SYNCSEL TMR2; TRIGSTAT disabled; OCINV enabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Cycle; FLTTRIEN disabled; 
+    OC4CON2 = 0x100C;
     // CMP2B 0; 
     OC4RS = 0x00;
     // CMP1B 0; 

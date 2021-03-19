@@ -62,9 +62,11 @@ int main(void) {
     rEnc = 2;
     tPWM = 0x1770;
     dPWM = 0xbb7;
-    HAB1_SetHigh();
+    HAB1_SetLow();
+    HAB2_SetLow();
+    HAB3_SetLow();
     motorFase = AC;
-    sMotor = true;
+    sMotor = false;
     TMR2_Initialize();
     TMR2_Start();
     while(1)
@@ -78,23 +80,6 @@ void TMR2_CallBack(void)
 {
     Motor_Sec(motorFase);
     IFS0bits.T2IF = false;
-    switch(sMotor)
-    {
-        case false:
-        {
-            if((++motorFase) == DD)
-            {
-                motorFase = AC;
-            }   
-        }
-        break;
-        case true:
-        {
-            if((--motorFase) < AC)
-            {
-                motorFase = AB;
-            }               
-        }
-        break;
-    }
+    sMotor ?    ((++motorFase == DD) ? (motorFase = AC) : motorFase) :
+                ((--motorFase < AC) ? (motorFase = AB) : motorFase);
 }

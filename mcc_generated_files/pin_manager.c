@@ -65,8 +65,8 @@ void PIN_MANAGER_Initialize (void)
     LATC = 0x0000;
     LATD = 0x0000;
     LATE = 0x0000;
-    LATF = 0x0000;
-    LATG = 0x0000;
+    LATF = 0x0040;
+    LATG = 0x000C;
 
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
@@ -91,8 +91,8 @@ void PIN_MANAGER_Initialize (void)
     CNPU2 = 0x0000;
     CNPU3 = 0x0000;
     CNPU4 = 0x0000;
-    CNPU5 = 0x0000;
-    CNPU6 = 0x0000;
+    CNPU5 = 0x0100;
+    CNPU6 = 0x0018;
 
     /****************************************************************************
      * Setting the Open Drain SFR(s)
@@ -115,12 +115,12 @@ void PIN_MANAGER_Initialize (void)
      ***************************************************************************/
     __builtin_write_OSCCONL(OSCCON & 0xbf); // unlock PPS
 
-    RPOR5bits.RP10R = 0x0014;    //RF4->OC3:OC3
-    RPOR15bits.RP30R = 0x0017;    //RF2->OC6:OC6
+    RPOR15bits.RP30R = 0x0023;    //RF2->OC9:OC9
     RPOR7bits.RP14R = 0x0012;    //RB14->OC1:OC1
+    RPOR8bits.RP17R = 0x0015;    //RF5->OC4:OC4
     RPOR14bits.RP29R = 0x0013;    //RB15->OC2:OC2
     RPOR8bits.RP16R = 0x0016;    //RF3->OC5:OC5
-    RPOR8bits.RP17R = 0x0015;    //RF5->OC4:OC4
+    RPOR5bits.RP10R = 0x0014;    //RF4->OC3:OC3
 
     __builtin_write_OSCCONL(OSCCON | 0x40); // lock PPS
 }

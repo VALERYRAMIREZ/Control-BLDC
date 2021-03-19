@@ -84,10 +84,12 @@ typedef struct
     uint8_t cMax;                   /* Corriente máxima o nominal del motor.  */
     uint8_t aPos;                   /* Posición actual del motor.             */
     bool sDir;                      /* Sentido de giro del motor.             */
-//    void * S_Vel(uint16_t * rpm, bool * dir);/* Puntero a función para 
-//                                     * establecer la velocidad del motor.     */
-//    void * S_Pos(uint8_t * pos, bool * dir);/* Puntero a función para establecer
-//                                     * la posición del motor.                 */
+    bool iMotor;                    /* Bandera para iniciar o detener el
+                                     * movimiento del motor.                  */
+    void (* S_Vel) (uint16_t * rpm, bool * dir);/* Puntero a función para 
+                                     * establecer la velocidad del motor.     */
+    void (* S_Pos) (uint8_t * pos, bool * dir);/* Puntero a función para
+                                     * establecer la posición del motor.      */
 } tMotor;
 
 typedef struct
