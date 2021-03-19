@@ -786,6 +786,152 @@
 #define IO_RB13_SetDigitalOutput() (_TRISB13 = 0)
 /**
   @Summary
+    Sets the GPIO pin, RB15, high using LATB15.
+
+  @Description
+    Sets the GPIO pin, RB15, high using LATB15.
+
+  @Preconditions
+    The RB15 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB15 high (1)
+    OC2_SetHigh();
+    </code>
+
+*/
+#define OC2_SetHigh()          (_LATB15 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RB15, low using LATB15.
+
+  @Description
+    Sets the GPIO pin, RB15, low using LATB15.
+
+  @Preconditions
+    The RB15 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB15 low (0)
+    OC2_SetLow();
+    </code>
+
+*/
+#define OC2_SetLow()           (_LATB15 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RB15, using LATB15.
+
+  @Description
+    Toggles the GPIO pin, RB15, using LATB15.
+
+  @Preconditions
+    The RB15 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RB15
+    OC2_Toggle();
+    </code>
+
+*/
+#define OC2_Toggle()           (_LATB15 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RB15.
+
+  @Description
+    Reads the value of the GPIO pin, RB15.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RB15
+    postValue = OC2_GetValue();
+    </code>
+
+*/
+#define OC2_GetValue()         _RB15
+/**
+  @Summary
+    Configures the GPIO pin, RB15, as an input.
+
+  @Description
+    Configures the GPIO pin, RB15, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB15 as an input
+    OC2_SetDigitalInput();
+    </code>
+
+*/
+#define OC2_SetDigitalInput()  (_TRISB15 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RB15, as an output.
+
+  @Description
+    Configures the GPIO pin, RB15, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB15 as an output
+    OC2_SetDigitalOutput();
+    </code>
+
+*/
+#define OC2_SetDigitalOutput() (_TRISB15 = 0)
+/**
+  @Summary
     Sets the GPIO pin, RB2, high using LATB2.
 
   @Description
@@ -2974,6 +3120,298 @@
 
 */
 #define D7_SetDigitalOutput() (_TRISE3 = 0)
+/**
+  @Summary
+    Sets the GPIO pin, RF2, high using LATF2.
+
+  @Description
+    Sets the GPIO pin, RF2, high using LATF2.
+
+  @Preconditions
+    The RF2 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RF2 high (1)
+    OC9_SetHigh();
+    </code>
+
+*/
+#define OC9_SetHigh()          (_LATF2 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RF2, low using LATF2.
+
+  @Description
+    Sets the GPIO pin, RF2, low using LATF2.
+
+  @Preconditions
+    The RF2 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RF2 low (0)
+    OC9_SetLow();
+    </code>
+
+*/
+#define OC9_SetLow()           (_LATF2 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RF2, using LATF2.
+
+  @Description
+    Toggles the GPIO pin, RF2, using LATF2.
+
+  @Preconditions
+    The RF2 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RF2
+    OC9_Toggle();
+    </code>
+
+*/
+#define OC9_Toggle()           (_LATF2 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RF2.
+
+  @Description
+    Reads the value of the GPIO pin, RF2.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RF2
+    postValue = OC9_GetValue();
+    </code>
+
+*/
+#define OC9_GetValue()         _RF2
+/**
+  @Summary
+    Configures the GPIO pin, RF2, as an input.
+
+  @Description
+    Configures the GPIO pin, RF2, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RF2 as an input
+    OC9_SetDigitalInput();
+    </code>
+
+*/
+#define OC9_SetDigitalInput()  (_TRISF2 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RF2, as an output.
+
+  @Description
+    Configures the GPIO pin, RF2, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RF2 as an output
+    OC9_SetDigitalOutput();
+    </code>
+
+*/
+#define OC9_SetDigitalOutput() (_TRISF2 = 0)
+/**
+  @Summary
+    Sets the GPIO pin, RF5, high using LATF5.
+
+  @Description
+    Sets the GPIO pin, RF5, high using LATF5.
+
+  @Preconditions
+    The RF5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RF5 high (1)
+    OC4_SetHigh();
+    </code>
+
+*/
+#define OC4_SetHigh()          (_LATF5 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RF5, low using LATF5.
+
+  @Description
+    Sets the GPIO pin, RF5, low using LATF5.
+
+  @Preconditions
+    The RF5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RF5 low (0)
+    OC4_SetLow();
+    </code>
+
+*/
+#define OC4_SetLow()           (_LATF5 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RF5, using LATF5.
+
+  @Description
+    Toggles the GPIO pin, RF5, using LATF5.
+
+  @Preconditions
+    The RF5 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RF5
+    OC4_Toggle();
+    </code>
+
+*/
+#define OC4_Toggle()           (_LATF5 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RF5.
+
+  @Description
+    Reads the value of the GPIO pin, RF5.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RF5
+    postValue = OC4_GetValue();
+    </code>
+
+*/
+#define OC4_GetValue()         _RF5
+/**
+  @Summary
+    Configures the GPIO pin, RF5, as an input.
+
+  @Description
+    Configures the GPIO pin, RF5, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RF5 as an input
+    OC4_SetDigitalInput();
+    </code>
+
+*/
+#define OC4_SetDigitalInput()  (_TRISF5 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RF5, as an output.
+
+  @Description
+    Configures the GPIO pin, RF5, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RF5 as an output
+    OC4_SetDigitalOutput();
+    </code>
+
+*/
+#define OC4_SetDigitalOutput() (_TRISF5 = 0)
 /**
   @Summary
     Sets the GPIO pin, RF6, high using LATF6.

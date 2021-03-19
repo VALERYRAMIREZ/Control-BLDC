@@ -140,7 +140,7 @@ extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
 
 
 
-void Motor_Sec(eMotor tEstado);
+motorInt Motor_Sec(eMotor tEstado);
 
 char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
                                              * almacenamiento de los datos en

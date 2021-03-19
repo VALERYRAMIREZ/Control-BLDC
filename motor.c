@@ -15,116 +15,96 @@ uint16_t tPWM;                      /* Variable para almacenar el período del
 uint16_t dPWM;                      /* Variable para almacenar el ciclo de
                                      * trabajo del PWM.                       */
 
-motorInt mRefInt;
-
-void Motor_Sec(eMotor tEstado)
+motorInt Motor_Sec(eMotor tEstado)
 {
-        switch(tEstado)
+    static motorInt mRefInt;
+    switch(tEstado)
     {
         case AC:
         {
+            OC1_SecondaryValueSet(dPWM - 2*rEnc);            
             OC1_PrimaryValueSet(2*rEnc);
-            OC1_SecondaryValueSet(dPWM - 2*rEnc);
-            OC2_PrimaryValueSet(0);   
-            OC2_SecondaryValueSet(dPWM);
+//            OC1_SecondaryValueSet(dPWM - 2*rEnc);
+            mRefInt.T2 = true;
             OC3_PrimaryValueSet(tPWM +rEnc);
             OC3_SecondaryValueSet(0);
-            OC4_PrimaryValueSet(tPWM +rEnc);
-            OC4_SecondaryValueSet(0);  
+            mRefInt.T4 = false;
             OC5_PrimaryValueSet(tPWM +rEnc);
-            OC5_SecondaryValueSet(0);
-            OC9_PrimaryValueSet(tPWM +rEnc);
-            OC9_SecondaryValueSet(0);              
+            OC5_SecondaryValueSet(0);              
+            mRefInt.T6 = false;
+            
         }
         break;
         case BC:
         {              
             OC1_PrimaryValueSet(tPWM +rEnc);
             OC1_SecondaryValueSet(0);
-            OC2_PrimaryValueSet(2*rEnc);   
-            OC2_SecondaryValueSet(dPWM - 2*rEnc);
-            OC3_PrimaryValueSet(0);
-            OC3_SecondaryValueSet(dPWM);
-            OC4_PrimaryValueSet(tPWM +rEnc);
-            OC4_SecondaryValueSet(0);  
+            mRefInt.T2 = true;
+            OC3_PrimaryValueSet(2*rEnc);
+            OC3_SecondaryValueSet(dPWM - 2*rEnc);
+            mRefInt.T4 = false;
             OC5_PrimaryValueSet(tPWM +rEnc);
-            OC5_SecondaryValueSet(0);
-            OC9_PrimaryValueSet(tPWM +rEnc);
-            OC9_SecondaryValueSet(0);         
+            OC5_SecondaryValueSet(0);      
+            mRefInt.T6 = true;
         }
         break;
         case BA:
         {
             OC1_PrimaryValueSet(tPWM +rEnc);
             OC1_SecondaryValueSet(0);
-            OC2_PrimaryValueSet(tPWM +rEnc);   
-            OC2_SecondaryValueSet(0);
+            mRefInt.T2 = false;
             OC3_PrimaryValueSet(2*rEnc);
             OC3_SecondaryValueSet(dPWM - 2*rEnc);
-            OC4_PrimaryValueSet(0);
-            OC4_SecondaryValueSet(dPWM);  
+            mRefInt.T4 = true;
             OC5_PrimaryValueSet(tPWM +rEnc);
             OC5_SecondaryValueSet(0);
-            OC9_PrimaryValueSet(tPWM +rEnc);
-            OC9_SecondaryValueSet(0);              
+            mRefInt.T6 = false;
         }
         break;
         case CA:
         {
             OC1_PrimaryValueSet(tPWM +rEnc);
             OC1_SecondaryValueSet(0);
-            OC2_PrimaryValueSet(tPWM +rEnc);   
-            OC2_SecondaryValueSet(0);
+            mRefInt.T2 = false;
             OC3_PrimaryValueSet(tPWM +rEnc);
             OC3_SecondaryValueSet(0);
-            OC4_PrimaryValueSet(2*rEnc);
-            OC4_SecondaryValueSet(dPWM - 2*rEnc);  
-            OC5_PrimaryValueSet(0);
-            OC5_SecondaryValueSet(dPWM);
-            OC9_PrimaryValueSet(tPWM +rEnc);
-            OC9_SecondaryValueSet(0);           
+            mRefInt.T4 = true;
+            OC5_PrimaryValueSet(2*rEnc);
+            OC5_SecondaryValueSet(dPWM - 2*rEnc);
+            mRefInt.T6 = false;
         }
         break;
         case CB:
         {
             OC1_PrimaryValueSet(tPWM +rEnc);
             OC1_SecondaryValueSet(0);
-            OC2_PrimaryValueSet(tPWM +rEnc);   
-            OC2_SecondaryValueSet(0);
+            mRefInt.T2 = false;
             OC3_PrimaryValueSet(tPWM +rEnc);
-            OC3_SecondaryValueSet(0);
-            OC4_PrimaryValueSet(tPWM +rEnc);
-            OC4_SecondaryValueSet(0);  
+            OC3_SecondaryValueSet(0); 
+            mRefInt.T4 = false;
             OC5_PrimaryValueSet(2*rEnc);
             OC5_SecondaryValueSet(dPWM - 2*rEnc);
-            OC9_PrimaryValueSet(0);
-            OC9_SecondaryValueSet(dPWM); 
+            mRefInt.T6 = true;
         }
         break;
         case AB:
         {
             OC1_PrimaryValueSet(2*rEnc);
             OC1_SecondaryValueSet(dPWM - 2*rEnc);
-            OC2_PrimaryValueSet(tPWM +rEnc);   
-            OC2_SecondaryValueSet(0);
+            mRefInt.T2 = false;
             OC3_PrimaryValueSet(tPWM +rEnc);
             OC3_SecondaryValueSet(0);
-            OC4_PrimaryValueSet(tPWM +rEnc);
-            OC4_SecondaryValueSet(0);  
+            mRefInt.T4 = false;
             OC5_PrimaryValueSet(tPWM +rEnc);
             OC5_SecondaryValueSet(0);
-            OC9_PrimaryValueSet(0);
-            OC9_SecondaryValueSet(dPWM);             
+            mRefInt.T6 = true;
         }
         break;
         case DD:
         {  
             OC1_Stop();
-            OC2_Stop();
             OC3_Stop();
-            OC4_Stop();
-            OC5_Stop();
-            OC9_Stop();          
+            OC5_Stop();    
         }
         break;
         default:
@@ -132,13 +112,8 @@ void Motor_Sec(eMotor tEstado)
             /* Manejo de errores */
         }
         break;
-        OC1_Start();
-        OC2_Start();
-        OC3_Start();
-        OC4_Start();
-        OC5_Start();
-        OC9_Start();         
     }
+    return mRefInt;
 }
 
 char* Alma_PID(uint8_t nParam_2,uint8_t dato_2)/* Prototipo de función para el*/
