@@ -58,7 +58,14 @@ typedef enum
     CB = 5,
     AB = 6,
     DD = 7,
-} eMotor;                           /* reloj cargar en sentido contrario.     */
+} eFases;                           /* reloj cargar en sentido contrario.     */
+
+typedef enum
+{
+    brushless = 1,
+    dc = 2,
+    paso = 3,
+} tMotor;
 
 typedef union __attribute((packed)) /* Estructura declaración para los        */
 {                                   /* transistores de potencia.              */
@@ -83,15 +90,20 @@ typedef struct
     uint8_t vMax;                   /* Tensión máxima o nominal del motor.    */
     uint8_t cMax;                   /* Corriente máxima o nominal del motor.  */
     uint8_t aPos;                   /* Posición actual del motor.             */
+    eFases motorFase;
     bool sDir;                      /* Sentido de giro del motor.             */
+    bool sMod;
     bool iMotor;                    /* Bandera para iniciar o detener el
                                      * movimiento del motor.                  */
-    void (*S_Init) (uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo);
+    void (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
     void (*S_DeInit) (void);
+    motorInt (*S_Sec) (eFases);     /* OJO: Esta función se va a quitar ya que
+                                     * va dentro de la función S_Vel.         */
     void (*S_Vel) (uint16_t *rpm, bool *dir);/* Puntero a función para 
                                      * establecer la velocidad del motor.     */
     void (*S_Pos) (uint8_t *pos, bool *dir);/* Puntero a función para
                                      * establecer la posición del motor.      */
+    bool (*S_invert) (bool);
 } Motor;
 
 typedef struct
@@ -111,6 +123,7 @@ extern uint16_t tPWM;               /* Variable para almacenar el período del
                                      * PWM.                                   */
 extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
                                      * trabajo del PWM.                       */
+extern Motor bldc;
 
 // Comment a function and leverage automatic documentation with slash star star
 /**
@@ -143,7 +156,9 @@ extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
 
 bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo);
 
-motorInt Motor_PWM_ON_Sec(eMotor tEstado);
+motorInt Motor_PWM_ON_Sec(eFases tEstado);
+
+void Motor_PWM_Sec(eFases tEstado);
 
 char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
                                              * almacenamiento de los datos en

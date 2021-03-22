@@ -51,40 +51,43 @@
 /*
                          Main application
  */
-eMotor motorFase;
-
-bool sMotor = 0;
-bool aMotor = 0;
 
 int main(void) {
     motorInt actualT;
-    uint16_t i;
+    uint16_t i;                     /* Inicialiazación de contador para el
+                                     * retardo de visualización, se debe borrar
+                                     * al terminar las pruebas.               */
     actualT.Ts = 0;
+    bldc.sDir = 0;
+    bldc.sMod = 0;
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
     rEnc = 2;
     tPWM = 0x1770;
     dPWM = tPWM +rEnc;
-    Motor_PWM_ON_Init(&rEnc,&dPWM,&tPWM);
-    for(i = 0; i < 30000; i++);     /* Retardo simple para visualización.     */
-    OC_Motor_Invert(true);
+    bldc.S_Init(&rEnc,&dPWM,&tPWM);
+    for(i = 0; i < 30000; i++);     /* Retardo simple para visualización. Se    
+                                     * debe borrar al terminar las pruebas.   */
+    bldc.S_invert(true);
     rEnc = 2;
     tPWM = 0x1770;
     dPWM = 0xbb7;    
-    motorFase = DD;
-    sMotor = true;
-    aMotor = false;
+    bldc.motorFase = DD;
+    bldc.sDir = true;
+    bldc.sMod = false;
     while(1)
     {
-        if(aMotor == true)
+        if(bldc.sMod == true)
         {
             (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
             (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        
             (actualT.T6 == true) ? OC9_SetLow() : OC9_SetHigh();
-            actualT = Motor_PWM_ON_Sec(motorFase); 
-            sMotor ? ((++motorFase > AB) ? (motorFase = AC) : motorFase) :
-                     ((--motorFase < AC) ? (motorFase = AB) : motorFase);               
-            aMotor = false;         
+            actualT = bldc.S_Sec(bldc.motorFase); 
+            bldc.sDir ? ((++bldc.motorFase > AB) ? 
+                                       (bldc.motorFase = AC) : bldc.motorFase) :
+                        ((--bldc.motorFase < AC) ? 
+                                       (bldc.motorFase = AB) : bldc.motorFase);               
+            bldc.sMod = false;         
         }
     }
     return 0;
@@ -92,7 +95,7 @@ int main(void) {
 
 void TMR2_CallBack(void)
 {
-    aMotor = true;
+    bldc.sMod = true;
     IFS0bits.T2IF = false;
     HAB3_Toggle();
 }
