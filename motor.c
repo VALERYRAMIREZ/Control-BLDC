@@ -15,9 +15,22 @@ uint16_t tPWM;                      /* Variable para almacenar el período del
 uint16_t dPWM;                      /* Variable para almacenar el ciclo de
                                      * trabajo del PWM.                       */
 
-bool Motor_PWM_Initialize(void)
+bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
 {
-    
+    HAB1_SetHigh();
+    HAB2_SetHigh();
+    HAB3_SetHigh();
+    OC2_SetHigh();
+    OC4_SetHigh();
+    OC9_SetHigh();
+    OC1_PrimaryValueSet(0);
+    OC1_SecondaryValueSet(*periodo + *retardo);
+    OC3_PrimaryValueSet(0);
+    OC3_SecondaryValueSet(*periodo);
+    OC5_PrimaryValueSet(0);
+    OC5_SecondaryValueSet(*periodo+ *retardo);
+    TMR2_Start();
+    return true;
 }
 
 motorInt Motor_PWM_ON_Sec(eMotor tEstado)

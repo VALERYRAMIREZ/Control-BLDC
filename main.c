@@ -65,20 +65,8 @@ int main(void) {
     rEnc = 2;
     tPWM = 0x1770;
     dPWM = tPWM +rEnc;
-    HAB1_SetHigh();
-    HAB2_SetHigh();
-    HAB3_SetHigh();
-    OC2_SetHigh();
-    OC4_SetHigh();
-    OC9_SetHigh();
-    OC1_PrimaryValueSet(0);
-    OC1_SecondaryValueSet(tPWM + rEnc);
-    OC3_PrimaryValueSet(0xbb7);
-    OC3_SecondaryValueSet(tPWM);
-    OC5_PrimaryValueSet(0);
-    OC5_SecondaryValueSet(tPWM + rEnc);
-    TMR2_Start();
-    for(i = 0; i < 30000; i++);
+    Motor_PWM_ON_Init(&rEnc,&dPWM,&tPWM);
+    for(i = 0; i < 30000; i++);     /* Retardo simple para visualización.     */
     OC_Motor_Invert(true);
     rEnc = 2;
     tPWM = 0x1770;
