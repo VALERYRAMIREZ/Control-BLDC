@@ -58,20 +58,34 @@ bool aMotor = 0;
 
 int main(void) {
     motorInt actualT;
+    uint16_t i;
     actualT.Ts = 0;
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
     rEnc = 2;
     tPWM = 0x1770;
-    dPWM = 0xbb7;
-    HAB1_SetLow();
-    HAB2_SetLow();
-    HAB3_SetLow();
-    motorFase = AC;
-    sMotor = false;
-    aMotor = false;
+    dPWM = tPWM +rEnc;
+    HAB1_SetHigh();
+    HAB2_SetHigh();
+    HAB3_SetHigh();
+    OC2_SetHigh();
+    OC4_SetHigh();
+    OC9_SetHigh();
+    OC1_PrimaryValueSet(0);
+    OC1_SecondaryValueSet(tPWM + rEnc);
+    OC3_PrimaryValueSet(0xbb7);
+    OC3_SecondaryValueSet(tPWM);
+    OC5_PrimaryValueSet(0);
+    OC5_SecondaryValueSet(tPWM + rEnc);
     TMR2_Start();
-//    Motor_Sec(AC);
+    for(i = 0; i < 30000; i++);
+    OC_Motor_Invert(true);
+    rEnc = 2;
+    tPWM = 0x1770;
+    dPWM = 0xbb7;    
+    motorFase = DD;
+    sMotor = true;
+    aMotor = false;
     while(1)
     {
         if(aMotor == true)
@@ -79,7 +93,7 @@ int main(void) {
             (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
             (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        
             (actualT.T6 == true) ? OC9_SetLow() : OC9_SetHigh();
-            actualT = Motor_Sec(motorFase); 
+            actualT = Motor_PWM_ON_Sec(motorFase); 
             sMotor ? ((++motorFase > AB) ? (motorFase = AC) : motorFase) :
                      ((--motorFase < AC) ? (motorFase = AB) : motorFase);               
             aMotor = false;         
@@ -90,10 +104,7 @@ int main(void) {
 
 void TMR2_CallBack(void)
 {
-    HAB3_Toggle();
-//    Motor_Sec(motorFase);
-//    sMotor ?    ((++motorFase > AB) ? (motorFase = AC) : motorFase) :
-//                ((--motorFase < AC) ? (motorFase = AB) : motorFase);
     aMotor = true;
     IFS0bits.T2IF = false;
+    HAB3_Toggle();
 }

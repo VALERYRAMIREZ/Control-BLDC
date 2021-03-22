@@ -1598,12 +1598,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC1" registerAlias="OCCON1" settingAlias="OCTSEL" alias="TMR3"/>
-         <value>1</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="OC5" registerAlias="OCRS" settingAlias="OCRS"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC1" registerAlias="OCCON1" settingAlias="OCTSEL" alias="TMR3"/>
+         <value>1</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC3" registerAlias="OCCON1" settingAlias="TRIGMODE" alias="Hardware or Software"/>
@@ -1683,7 +1683,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR2" registerAlias="TCON"/>
-         <value>32768</value>
+         <value>0</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="Pll_Dependent_Clock_Switching"/>
@@ -4151,7 +4151,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="OC5" registerAlias="OCCON2" settingAlias="OCINV"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="ODCF" settingAlias="ODF1" alias="disabled"/>
@@ -4163,11 +4163,11 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="OC3" registerAlias="OCCON2" settingAlias="OCINV"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="OC1" registerAlias="OCCON2" settingAlias="OCINV"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="OC3" name="Trigger Source"/>
@@ -7567,7 +7567,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="OC3" registerAlias="OCCON2"/>
-         <value>4108</value>
+         <value>12</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC1" registerAlias="OCCON2" settingAlias="SYNCSEL" alias="CMP3"/>
@@ -7579,7 +7579,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="OC1" registerAlias="OCCON2"/>
-         <value>4108</value>
+         <value>12</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="System Module" registerAlias="CONFIG3" settingAlias="WPFP" alias="WPFP118"/>
@@ -7599,7 +7599,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="OC5" registerAlias="OCCON2"/>
-         <value>4108</value>
+         <value>12</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="System Module" registerAlias="CONFIG3" settingAlias="WPFP" alias="WPFP119"/>
@@ -9291,7 +9291,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR2" registerAlias="TCON" settingAlias="TON"/>
-         <value>enabled</value>
+         <value>disabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="customNameUserSet RE1"/>
@@ -10041,7 +10041,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>eb239193bd65c4150c3d4d906105b8d847cf706426ec3b1426544a0aa2387525</hash>
+         <hash>369c43b2df78f2c6297419fdd949b99f41dae7608733b49676892cc34eb99a98</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\clock.c</file>
@@ -10061,7 +10061,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\tmr2.c</file>
-         <hash>ea0e25ade6a239aafd2307af0d0aeb60144de7bbdab5236acc5de1fde7f67790</hash>
+         <hash>c087a9e6154335fdd9da330671c8952c95a7200d304e38262acef9d780ce5ca5</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.h</file>
@@ -10076,24 +10076,24 @@
          <hash>eb55ed4d43115ff3e80818dd02dc3eb3eb965698e9271209da9cef52b4d3c5ec</hash>
       </entry>
       <entry>
+         <file>mcc_generated_files\pin_manager.c</file>
+         <hash>ffbb181107b73f2991a7f8072602771d7a8632317e6a807de960f98bd5e6d38c</hash>
+      </entry>
+      <entry>
          <file>mcc_generated_files\system.h</file>
          <hash>8b6b4c5076ad251653095a9ae9691fa26fff7d19a431ec6789936daa14fa793c</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\pin_manager.c</file>
-         <hash>a92bac9ccbba6372d62265a60e272da6fdeacd0431d145ec036c5eab9072b325</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\oc3.c</file>
-         <hash>1401389108f3f217346c8bc773a254e869d9cf3dcb83abe1b613b4e576dd796e</hash>
+         <hash>22a0c5a68e8c82438b4cbbdbfb7d2b3943ce4bdaaa7ae21b90d193972c4ba4ea</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\oc5.c</file>
-         <hash>74969a6c5f38d8b561ad5f3adf8b8faf543d9d246545dd846e74079ee398fb66</hash>
+         <hash>ec979551833c9b89ee5d41bbed14b154d36cafd36f140804020681f54693955b</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\system.c</file>
-         <hash>b6862ee699c46e17d5c35a2d1dcd78da442282687a98f36f10d46e148315b3f9</hash>
+         <hash>d8ae3249472b0c5e44ef004cefdae57990ef45fa875797096e08329fd93ce1fc</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.c</file>
@@ -10101,7 +10101,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\oc1.c</file>
-         <hash>bb74f1f38d4b33384056cc4e747920c89e44733b2c5fe0bfb9e4498043233e64</hash>
+         <hash>426b50acd39a997ef9561d0d8994b200dff6350554eb7c09e0435c6be5bfad2a</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.h</file>

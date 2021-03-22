@@ -15,7 +15,12 @@ uint16_t tPWM;                      /* Variable para almacenar el período del
 uint16_t dPWM;                      /* Variable para almacenar el ciclo de
                                      * trabajo del PWM.                       */
 
-motorInt Motor_Sec(eMotor tEstado)
+bool Motor_PWM_Initialize(void)
+{
+    
+}
+
+motorInt Motor_PWM_ON_Sec(eMotor tEstado)
 {
     static motorInt mRefInt;
     switch(tEstado)
@@ -24,7 +29,6 @@ motorInt Motor_Sec(eMotor tEstado)
         {
             OC1_SecondaryValueSet(dPWM - 2*rEnc);            
             OC1_PrimaryValueSet(2*rEnc);
-//            OC1_SecondaryValueSet(dPWM - 2*rEnc);
             mRefInt.T2 = true;
             OC3_PrimaryValueSet(tPWM +rEnc);
             OC3_SecondaryValueSet(0);
@@ -45,7 +49,7 @@ motorInt Motor_Sec(eMotor tEstado)
             mRefInt.T4 = false;
             OC5_PrimaryValueSet(tPWM +rEnc);
             OC5_SecondaryValueSet(0);      
-            mRefInt.T6 = true;
+            mRefInt.T6 = false;
         }
         break;
         case BA:
@@ -102,9 +106,15 @@ motorInt Motor_Sec(eMotor tEstado)
         break;
         case DD:
         {  
-            OC1_Stop();
-            OC3_Stop();
-            OC5_Stop();    
+            OC1_PrimaryValueSet(tPWM +rEnc);
+            OC1_SecondaryValueSet(0);
+            OC3_PrimaryValueSet(tPWM +rEnc);
+            OC3_SecondaryValueSet(0);
+            OC5_PrimaryValueSet(tPWM +rEnc);
+            OC5_SecondaryValueSet(0);
+            OC2_SetHigh();
+            OC4_SetHigh();
+            OC9_SetHigh();            
         }
         break;
         default:
@@ -169,4 +179,11 @@ void Motor_Vel(uint16_t rpm, bool dir)
     {
         return;
     }
+}
+
+void OC_Motor_Invert(bool invert)
+{
+    OC1CON2bits.OCINV = invert;
+    OC3CON2bits.OCINV = invert;    
+    OC5CON2bits.OCINV = invert;
 }

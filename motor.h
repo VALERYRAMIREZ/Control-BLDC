@@ -140,20 +140,22 @@ extern uint16_t dPWM;               /* Variable para almacenar el ciclo de
 
 
 
-motorInt Motor_Sec(eMotor tEstado);
+motorInt Motor_PWM_ON_Sec(eMotor tEstado);
 
 char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
                                              * almacenamiento de los datos en
                                              * las estructuras de configuración
                                              * del PID.                       */
 
- void Motor_Vel(uint16_t rpm, bool dir);/* Prototipo de función para establecer
+void Motor_Vel(uint16_t rpm, bool dir); /* Prototipo de función para establecer
                                          * la velocidad de giro y el sentido de
                                          * giro del motor.                    */
  
- void Motor_Pos(uint8_t pos, bool dir); /* Prototipo de función para establecer
+void Motor_Pos(uint8_t pos, bool dir);  /* Prototipo de función para establecer
                                          * la posición que debe alcanzar la 
                                          * flecha del motor.                  */
+
+void OC_Motor_Invert(bool invert);
  
 #ifdef	__cplusplus
 extern "C" {
