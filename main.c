@@ -45,6 +45,7 @@
 /**
   Section: Included Files
 */
+#include <stdio.h>
 #include "mcc_generated_files/mcc.h"
 #include "motor.h"
 /*
@@ -52,34 +53,46 @@
  */
 eMotor motorFase;
 
-bool sMotor;
-
-extern motorInt mRefInt;
+bool sMotor = 0;
+bool aMotor = 0;
 
 int main(void) {
+    motorInt actualT;
+    uint16_t i;
+    actualT.Ts = 0;
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
     rEnc = 2;
     tPWM = 0x1770;
-    dPWM = 0xbb7;
-    HAB1_SetLow();
-    HAB2_SetLow();
-    HAB3_SetLow();
-    motorFase = AC;
-    sMotor = false;
-    TMR2_Initialize();
-    TMR2_Start();
+    dPWM = tPWM +rEnc;
+    Motor_PWM_ON_Init(&rEnc,&dPWM,&tPWM);
+    for(i = 0; i < 30000; i++);     /* Retardo simple para visualización.     */
+    OC_Motor_Invert(true);
+    rEnc = 2;
+    tPWM = 0x1770;
+    dPWM = 0xbb7;    
+    motorFase = DD;
+    sMotor = true;
+    aMotor = false;
     while(1)
     {
-        
+        if(aMotor == true)
+        {
+            (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
+            (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        
+            (actualT.T6 == true) ? OC9_SetLow() : OC9_SetHigh();
+            actualT = Motor_PWM_ON_Sec(motorFase); 
+            sMotor ? ((++motorFase > AB) ? (motorFase = AC) : motorFase) :
+                     ((--motorFase < AC) ? (motorFase = AB) : motorFase);               
+            aMotor = false;         
+        }
     }
     return 0;
 }
 
 void TMR2_CallBack(void)
 {
-    Motor_Sec(motorFase);
+    aMotor = true;
     IFS0bits.T2IF = false;
-    sMotor ?    ((++motorFase == DD) ? (motorFase = AC) : motorFase) :
-                ((--motorFase < AC) ? (motorFase = AB) : motorFase);
+    HAB3_Toggle();
 }
