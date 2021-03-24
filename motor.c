@@ -397,27 +397,27 @@ bldcFases Motor_Hall_Sensor(uint16_t port, bool dir)
         break;
         case p2:
         {
-            sec = dir ? AC : AB;
+            sec = dir ? AC : BC;
         }
         break;
         case p3:
         {
-            sec = dir ? BC : CB;          
+            sec = dir ? BC : BA;          
         }
         break;
         case p4:
         {
-            sec = dir ? BA: CA;          
+            sec = dir ? BA : CA;          
         }
         break;
         case p5:
         {
-            sec = dir ? CA : BA;          
+            sec = dir ? CA : CB;          
         }
         break;
         case p6:
         {
-            sec = dir ? CB : BC;        
+            sec = dir ? CB : AB;        
         }
         break;        
         default:

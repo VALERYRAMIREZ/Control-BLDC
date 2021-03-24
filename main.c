@@ -69,7 +69,7 @@ int main(void) {
     rEnc = 2;
     tPWM = 0x1770;
     dPWM = 0xbb7;    
-    bldc.sDir = false;
+    bldc.sDir = true;
     bldc.sMod = false;
     bldc.motorFase = Motor_Hall_Sensor(PORTD, bldc.sDir);
     while(1)
