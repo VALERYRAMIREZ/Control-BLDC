@@ -49,6 +49,13 @@
 #define MAX_tension_cont    3.3     /* Máxima tensión permitida en la etapa de
                                      * control.                               */
 
+typedef enum
+{
+    brushless = 1,
+    dc = 2,
+    paso = 3,
+} tMotor;
+
 typedef enum                
 {
     AC = 1,
@@ -58,14 +65,17 @@ typedef enum
     CB = 5,
     AB = 6,
     DD = 7,
-} eFases;                           /* reloj cargar en sentido contrario.     */
+} bldcFases;                        /* reloj cargar en sentido contrario.     */
 
 typedef enum
 {
-    brushless = 1,
-    dc = 2,
-    paso = 3,
-} tMotor;
+    p1 = 3,
+    p2 = 7,
+    p3 = 6,
+    p4 = 4,
+    p5 = 0,
+    p6 = 1,
+} bldcPos;
 
 typedef union __attribute((packed)) /* Estructura declaración para los        */
 {                                   /* transistores de potencia.              */
@@ -90,18 +100,18 @@ typedef struct
     uint8_t vMax;                   /* Tensión máxima o nominal del motor.    */
     uint8_t cMax;                   /* Corriente máxima o nominal del motor.  */
     uint8_t aPos;                   /* Posición actual del motor.             */
-    eFases motorFase;
+    bldcFases motorFase;
     bool sDir;                      /* Sentido de giro del motor.             */
     bool sMod;
     bool iMotor;                    /* Bandera para iniciar o detener el
                                      * movimiento del motor.                  */
-    void (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
-    void (*S_DeInit) (void);
-    motorInt (*S_Sec) (eFases);     /* OJO: Esta función se va a quitar ya que
+    bool (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
+    bool (*S_DeInit) (void);
+    motorInt (*S_Sec) (bldcFases);  /* OJO: Esta función se va a quitar ya que
                                      * va dentro de la función S_Vel.         */
-    void (*S_Vel) (uint16_t *rpm, bool *dir);/* Puntero a función para 
+    void (*S_Vel) (uint16_t, bool); /* Puntero a función para 
                                      * establecer la velocidad del motor.     */
-    void (*S_Pos) (uint8_t *pos, bool *dir);/* Puntero a función para
+    void (*S_Pos) (uint8_t *, bool *dir);/* Puntero a función para
                                      * establecer la posición del motor.      */
     bool (*S_invert) (bool);
 } Motor;
@@ -156,9 +166,11 @@ extern Motor bldc;
 
 bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo);
 
-motorInt Motor_PWM_ON_Sec(eFases tEstado);
+bool Motor_PWM_ON_DeInit(void);
 
-void Motor_PWM_Sec(eFases tEstado);
+motorInt Motor_PWM_ON_Sec(bldcFases tEstado);
+
+void Motor_PWM_Sec(bldcFases tEstado);
 
 char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
                                              * almacenamiento de los datos en
@@ -173,8 +185,12 @@ void Motor_Pos(uint8_t pos, bool dir);  /* Prototipo de función para establecer
                                          * la posición que debe alcanzar la 
                                          * flecha del motor.                  */
 
-void OC_Motor_Invert(bool invert);
+bool Motor_OC_Invert(bool invert);
+
+bool Motor_Fase_Act(bldcFases *edo, bool *dir);
  
+bldcFases Motor_Hall_Sensor(uint16_t port, bool dir);
+
 #ifdef	__cplusplus
 extern "C" {
 #endif /* __cplusplus */

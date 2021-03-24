@@ -1,5 +1,5 @@
 #include "motor.h"
-#include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/system.h"
 
 motor PID;                              /* Estructura de tipo motot para
                                          * almacenar los datos del PID.       */
@@ -18,16 +18,18 @@ uint16_t dPWM;                      /* Variable para almacenar el ciclo de
 Motor bldc =
 {
     .sTipo = brushless,
-    .S_Init = &Motor_PWM_ON_Init,
-    .S_Sec = &Motor_PWM_ON_Sec,
-    .S_invert = &OC_Motor_Invert,
+    .S_Init = Motor_PWM_ON_Init,
+    .S_DeInit = Motor_PWM_ON_DeInit,
+    .S_Sec = Motor_PWM_ON_Sec,
+    .S_Vel = Motor_Vel,
+    .S_invert = Motor_OC_Invert,
 };
 
 bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
 {
-    HAB1_SetHigh();
-    HAB2_SetHigh();
-    HAB3_SetHigh();
+    HAB1_SetLow();
+    HAB2_SetLow();
+    HAB3_SetLow();
     OC2_SetHigh();
     OC4_SetHigh();
     OC9_SetHigh();
@@ -40,8 +42,21 @@ bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
     TMR2_Start();
     return true;
 }
+bool Motor_PWM_ON_DeInit(void)
+{
+    OC1_PrimaryValueSet(tPWM +rEnc);
+    OC1_SecondaryValueSet(0);
+    OC3_PrimaryValueSet(tPWM +rEnc);
+    OC3_SecondaryValueSet(0);
+    OC5_PrimaryValueSet(tPWM +rEnc);
+    OC5_SecondaryValueSet(0);
+    OC2_SetHigh();
+    OC4_SetHigh();
+    OC9_SetHigh(); 
+    return true;
+}
 
-motorInt Motor_PWM_ON_Sec(eFases tEstado)
+motorInt Motor_PWM_ON_Sec(bldcFases tEstado)
 {
     static motorInt mRefInt;
     switch(tEstado)
@@ -147,7 +162,7 @@ motorInt Motor_PWM_ON_Sec(eFases tEstado)
     return mRefInt;
 }
 
-//void Motor_PWM_Sec(eFases tEstado)
+//void Motor_PWM_Sec(bldcFases tEstado)
 //{
 //        switch(tEstado)
 //    {
@@ -272,7 +287,8 @@ motorInt Motor_PWM_ON_Sec(eFases tEstado)
 //}
 char* Alma_PID(uint8_t nParam_2,uint8_t dato_2)/* Prototipo de función para el*/
 {                                       /* almacenamiento de los datos en     */
-    static uint8_t cDato_2 = 0, temp_2 = 1;/* estructuras de configuración del*/
+    static uint8_t cDato_2 = 0;
+    static uint8_t temp_2 = 1;/* estructuras de configuración del*/
     char *exporta = 0;                  /* PID.                               */
     if(temp_2 != nParam_2)              /* Se reinicia cDato_1 si se cambia   */
     {                                   /* parámetro a llenar en la estructura*/
@@ -309,6 +325,11 @@ char* Alma_PID(uint8_t nParam_2,uint8_t dato_2)/* Prototipo de función para el*/
                 cDato_2++;
             }
         }
+        break;
+        default:
+        {
+
+        }
         break;        
     }
     temp_2 = nParam_2;                  /* Se asigna nParam_1 a temp_2 para
@@ -321,13 +342,89 @@ void Motor_Vel(uint16_t rpm, bool dir)
 {
     if(MAX_rpm < rpm)
     {
-        return;
+        /* Se debe hacer una unción para mostrar en pantalla que se alcanzó la
+         * velocidad máxima permitida para el motor.                          */
+        rpm = MAX_rpm;
+    }
+    else if(rpm < 0)
+    {
+        /* Se debe hacer una función para mostrar en pantalla que se alcanzó la
+         * velocidad mínima permitida.                                        */
+        rpm = 0;
+    }
+    if(rpm == 0)
+    {
+        Motor_Fase_Act((bldcFases *) DD, &dir);        
+    }
+    else if(rpm > 0)
+    {
+        Motor_Fase_Act(&bldc.motorFase, &dir);
     }
 }
 
-void OC_Motor_Invert(bool invert)
+bool Motor_OC_Invert(bool invert)
 {
     OC1CON2bits.OCINV = invert;
     OC3CON2bits.OCINV = invert;    
     OC5CON2bits.OCINV = invert;
+    return true;
+}
+
+bool Motor_Fase_Act(bldcFases *edo, bool *dir)
+{
+    static motorInt actualT;
+    (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
+    (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        
+    (actualT.T6 == true) ? OC9_SetLow() : OC9_SetHigh();
+    actualT = bldc.S_Sec(*edo); 
+    *dir ? ((*edo > AB) ? 
+                               (*edo = AC) : *edo) :
+                ((*edo < AC) ? 
+                               (*edo = AB) : *edo);  
+    return true;
+}
+
+bldcFases Motor_Hall_Sensor(uint16_t port, bool dir)
+{
+    bldcFases sec = 0;
+    uint8_t lectura = (port & 0x700) >> 8;
+    switch(lectura)
+    {
+        case p1:
+        {
+            sec = dir ? AB : AC;
+        }
+        break;
+        case p2:
+        {
+            sec = dir ? AC : AB;
+        }
+        break;
+        case p3:
+        {
+            sec = dir ? BC : CB;          
+        }
+        break;
+        case p4:
+        {
+            sec = dir ? BA: CA;          
+        }
+        break;
+        case p5:
+        {
+            sec = dir ? CA : BA;          
+        }
+        break;
+        case p6:
+        {
+            sec = dir ? CB : BC;        
+        }
+        break;        
+        default:
+        {
+            __asm("nop");
+        }
+        break;
+    }
+    return sec;
 }

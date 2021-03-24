@@ -2246,6 +2246,152 @@
 #define IO_RC13_SetDigitalOutput() (_TRISC13 = 0)
 /**
   @Summary
+    Sets the GPIO pin, RD10, high using LATD10.
+
+  @Description
+    Sets the GPIO pin, RD10, high using LATD10.
+
+  @Preconditions
+    The RD10 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD10 high (1)
+    ENC3_SetHigh();
+    </code>
+
+*/
+#define ENC3_SetHigh()          (_LATD10 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RD10, low using LATD10.
+
+  @Description
+    Sets the GPIO pin, RD10, low using LATD10.
+
+  @Preconditions
+    The RD10 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD10 low (0)
+    ENC3_SetLow();
+    </code>
+
+*/
+#define ENC3_SetLow()           (_LATD10 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RD10, using LATD10.
+
+  @Description
+    Toggles the GPIO pin, RD10, using LATD10.
+
+  @Preconditions
+    The RD10 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RD10
+    ENC3_Toggle();
+    </code>
+
+*/
+#define ENC3_Toggle()           (_LATD10 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RD10.
+
+  @Description
+    Reads the value of the GPIO pin, RD10.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RD10
+    postValue = ENC3_GetValue();
+    </code>
+
+*/
+#define ENC3_GetValue()         _RD10
+/**
+  @Summary
+    Configures the GPIO pin, RD10, as an input.
+
+  @Description
+    Configures the GPIO pin, RD10, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD10 as an input
+    ENC3_SetDigitalInput();
+    </code>
+
+*/
+#define ENC3_SetDigitalInput()  (_TRISD10 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RD10, as an output.
+
+  @Description
+    Configures the GPIO pin, RD10, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD10 as an output
+    ENC3_SetDigitalOutput();
+    </code>
+
+*/
+#define ENC3_SetDigitalOutput() (_TRISD10 = 0)
+/**
+  @Summary
     Sets the GPIO pin, RD11, high using LATD11.
 
   @Description
@@ -2536,6 +2682,298 @@
 
 */
 #define RW_SetDigitalOutput() (_TRISD5 = 0)
+/**
+  @Summary
+    Sets the GPIO pin, RD8, high using LATD8.
+
+  @Description
+    Sets the GPIO pin, RD8, high using LATD8.
+
+  @Preconditions
+    The RD8 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD8 high (1)
+    ENC1_SetHigh();
+    </code>
+
+*/
+#define ENC1_SetHigh()          (_LATD8 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RD8, low using LATD8.
+
+  @Description
+    Sets the GPIO pin, RD8, low using LATD8.
+
+  @Preconditions
+    The RD8 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD8 low (0)
+    ENC1_SetLow();
+    </code>
+
+*/
+#define ENC1_SetLow()           (_LATD8 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RD8, using LATD8.
+
+  @Description
+    Toggles the GPIO pin, RD8, using LATD8.
+
+  @Preconditions
+    The RD8 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RD8
+    ENC1_Toggle();
+    </code>
+
+*/
+#define ENC1_Toggle()           (_LATD8 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RD8.
+
+  @Description
+    Reads the value of the GPIO pin, RD8.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RD8
+    postValue = ENC1_GetValue();
+    </code>
+
+*/
+#define ENC1_GetValue()         _RD8
+/**
+  @Summary
+    Configures the GPIO pin, RD8, as an input.
+
+  @Description
+    Configures the GPIO pin, RD8, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD8 as an input
+    ENC1_SetDigitalInput();
+    </code>
+
+*/
+#define ENC1_SetDigitalInput()  (_TRISD8 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RD8, as an output.
+
+  @Description
+    Configures the GPIO pin, RD8, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD8 as an output
+    ENC1_SetDigitalOutput();
+    </code>
+
+*/
+#define ENC1_SetDigitalOutput() (_TRISD8 = 0)
+/**
+  @Summary
+    Sets the GPIO pin, RD9, high using LATD9.
+
+  @Description
+    Sets the GPIO pin, RD9, high using LATD9.
+
+  @Preconditions
+    The RD9 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD9 high (1)
+    ENC2_SetHigh();
+    </code>
+
+*/
+#define ENC2_SetHigh()          (_LATD9 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RD9, low using LATD9.
+
+  @Description
+    Sets the GPIO pin, RD9, low using LATD9.
+
+  @Preconditions
+    The RD9 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD9 low (0)
+    ENC2_SetLow();
+    </code>
+
+*/
+#define ENC2_SetLow()           (_LATD9 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RD9, using LATD9.
+
+  @Description
+    Toggles the GPIO pin, RD9, using LATD9.
+
+  @Preconditions
+    The RD9 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RD9
+    ENC2_Toggle();
+    </code>
+
+*/
+#define ENC2_Toggle()           (_LATD9 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RD9.
+
+  @Description
+    Reads the value of the GPIO pin, RD9.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RD9
+    postValue = ENC2_GetValue();
+    </code>
+
+*/
+#define ENC2_GetValue()         _RD9
+/**
+  @Summary
+    Configures the GPIO pin, RD9, as an input.
+
+  @Description
+    Configures the GPIO pin, RD9, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD9 as an input
+    ENC2_SetDigitalInput();
+    </code>
+
+*/
+#define ENC2_SetDigitalInput()  (_TRISD9 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RD9, as an output.
+
+  @Description
+    Configures the GPIO pin, RD9, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD9 as an output
+    ENC2_SetDigitalOutput();
+    </code>
+
+*/
+#define ENC2_SetDigitalOutput() (_TRISD9 = 0)
 /**
   @Summary
     Sets the GPIO pin, RE0, high using LATE0.
@@ -3885,6 +4323,64 @@
 */
 void PIN_MANAGER_Initialize (void);
 
+/**
+  @Summary
+    Callback for IOC Pins.
 
+  @Description
+    This routine is callback for IOC Pins.
+
+  @Param
+    None.
+
+  @Returns
+    None
+ 
+  @Example 
+    <code>
+        CN_SetInterruptHandler(&CN_CallBack);
+    </code>
+*/
+void CN_CallBack(void);
+
+/**
+  @Summary
+    Assigns a function pointer with a callback address.
+
+  @Description
+    This routine assigns a function pointer with a callback address.
+
+  @Param
+    Address of the callback routine.
+
+  @Returns
+    None
+ 
+  @Example 
+    <code>
+        CN_SetInterruptHandler(&CN_CallBack);
+    </code>
+*/
+void CN_SetInterruptHandler(void (* InterruptHandler)(void));
+
+/**
+  @Summary
+    Assigns a function pointer with a callback address.
+
+  @Description
+    This routine assigns a function pointer with a callback address.
+
+  @Param
+    Address of the callback routine.
+
+  @Returns
+    None
+ 
+  @Example 
+    <code>
+        CN_SetIOCInterruptHandler(&CN_CallBack);
+    </code>
+*/
+void __attribute__((deprecated("\nThis will be removed in future MCC releases. \nUse CN_SetInterruptHandler instead."))) CN_SetIOCInterruptHandler(void *handler);
 
 #endif

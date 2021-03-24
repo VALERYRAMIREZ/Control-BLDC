@@ -52,6 +52,17 @@
 #include "xc.h"
 #include "stdint.h"
 #include "stdbool.h"
+#include "clock.h"
+#include "pin_manager.h"
+#include <stdint.h>
+#include <stdbool.h>
+
+#include "oc5.h"
+#include "oc3.h"
+#include "tmr2.h"
+#include "interrupt_manager.h"
+#include "traps.h"
+#include "oc1.h"
 /**
  * @Param
     none

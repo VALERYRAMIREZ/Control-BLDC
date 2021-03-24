@@ -46,25 +46,22 @@
   Section: Included Files
 */
 #include <stdio.h>
-#include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/system.h"
 #include "motor.h"
 /*
                          Main application
  */
 
 int main(void) {
-    motorInt actualT;
+
     uint16_t i;                     /* Inicialiazación de contador para el
                                      * retardo de visualización, se debe borrar
                                      * al terminar las pruebas.               */
-    actualT.Ts = 0;
-    bldc.sDir = 0;
-    bldc.sMod = 0;
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
     rEnc = 2;
     tPWM = 0x1770;
-    dPWM = tPWM +rEnc;
+    dPWM = tPWM + rEnc;
     bldc.S_Init(&rEnc,&dPWM,&tPWM);
     for(i = 0; i < 30000; i++);     /* Retardo simple para visualización. Se    
                                      * debe borrar al terminar las pruebas.   */
@@ -72,21 +69,14 @@ int main(void) {
     rEnc = 2;
     tPWM = 0x1770;
     dPWM = 0xbb7;    
-    bldc.motorFase = DD;
     bldc.sDir = true;
     bldc.sMod = false;
+    bldc.motorFase = Motor_Hall_Sensor(PORTD, bldc.sDir);
     while(1)
     {
         if(bldc.sMod == true)
         {
-            (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
-            (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        
-            (actualT.T6 == true) ? OC9_SetLow() : OC9_SetHigh();
-            actualT = bldc.S_Sec(bldc.motorFase); 
-            bldc.sDir ? ((++bldc.motorFase > AB) ? 
-                                       (bldc.motorFase = AC) : bldc.motorFase) :
-                        ((--bldc.motorFase < AC) ? 
-                                       (bldc.motorFase = AB) : bldc.motorFase);               
+            bldc.S_Vel(200, bldc.sDir);            
             bldc.sMod = false;         
         }
     }
@@ -96,6 +86,9 @@ int main(void) {
 void TMR2_CallBack(void)
 {
     bldc.sMod = true;
-    IFS0bits.T2IF = false;
-    HAB3_Toggle();
+}
+
+void CN_CallBack(void)
+{
+    bldc.motorFase = Motor_Hall_Sensor(PORTD, bldc.sDir);
 }
