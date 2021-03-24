@@ -9,20 +9,20 @@
          <string>class com.microchip.mcc.mcu16.mainManager.MainManager</string>
       </entry>
       <entry>
-         <string>Pin Module</string>
-         <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
-      </entry>
-      <entry>
          <string>WATCHDOG</string>
          <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
       </entry>
       <entry>
-         <string>ICD</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
+         <string>Pin Module</string>
+         <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
       </entry>
       <entry>
          <string>RESET</string>
          <string>class com.microchip.mcc.mcu16.systemManager.reset.RESET</string>
+      </entry>
+      <entry>
+         <string>ICD</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
       </entry>
       <entry>
          <string>Interrupt Module</string>
@@ -45,12 +45,12 @@
          <string>class com.microchip.mcc.mcu16.modules.oc.OC</string>
       </entry>
       <entry>
-         <string>TMR2</string>
-         <string>class com.microchip.mcc.mcu16.modules.tmr.TMR</string>
-      </entry>
-      <entry>
          <string>OC3</string>
          <string>class com.microchip.mcc.mcu16.modules.oc.OC</string>
+      </entry>
+      <entry>
+         <string>TMR2</string>
+         <string>class com.microchip.mcc.mcu16.modules.tmr.TMR</string>
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
@@ -1542,12 +1542,12 @@
          <value>63</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR2" registerAlias="PR32"/>
-         <value>0</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC3" registerAlias="OCCON2" settingAlias="OCINV" alias="enabled"/>
          <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR2" registerAlias="PR32"/>
+         <value>0</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="INTERNAL OSCILLATOR" registerAlias="PMD2" settingAlias="IC2MD" alias="disabled"/>
@@ -1763,7 +1763,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="Pin Module" registerAlias="ODCD"/>
-         <value>0</value>
+         <value>1792</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNPD2" settingAlias="CN16PDE" alias="enabled"/>
@@ -6054,12 +6054,12 @@
          <value>1</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR2" name="localClockFreq"/>
-         <value>4000000</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC3" registerAlias="OCCON2" settingAlias="SYNCSEL" alias="OC6"/>
          <value>6</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR2" name="localClockFreq"/>
+         <value>4000000</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC3" registerAlias="OCCON2" settingAlias="SYNCSEL" alias="OC5"/>
@@ -7655,7 +7655,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="ODCD" settingAlias="ODD10"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="INTERNAL OSCILLATOR" registerAlias="PMD1" settingAlias="U1MD" alias="enabled"/>
@@ -9471,7 +9471,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="ODCD" settingAlias="ODD8"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="anselUserSetRB14"/>
@@ -9599,7 +9599,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="ODCD" settingAlias="ODD9"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="CNPU1" settingAlias="CN9PUE" alias="disabled"/>
@@ -10037,7 +10037,7 @@
    <generatedFileHashHistoryMap class="java.util.HashMap">
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>b06da7c37fa444c42164fd627f188ea2d3a7ab42cb16a602125849ef24438361</hash>
+         <hash>2ecbbeeb58b4913cfb70a552ca607017ca2fb9ff2ca840133373762b32915da5</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.h</file>
@@ -10081,7 +10081,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.c</file>
-         <hash>9bda519b5c5db028d1411bd7374c46d14e6adc8d09a20ad34a66645742bc00b0</hash>
+         <hash>0828d358b58f33b889212e87f6b923935f89f85978f126e96b1afe1d35929c00</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\oc3.c</file>
@@ -10093,7 +10093,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\system.c</file>
-         <hash>59fb8bd2701ddfc9282387b92322898cc80533b898328dc1bd1e155b1016d7a1</hash>
+         <hash>f9a0bcf52cbe2bd497deadc02b669660c82f0a7aa4f250e90c72eae170c0d964</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.c</file>

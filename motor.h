@@ -70,11 +70,17 @@ typedef enum
 typedef enum
 {
     p1 = 3,
-    p2 = 7,
+    p2 = 2,
     p3 = 6,
     p4 = 4,
-    p5 = 0,
-    p6 = 1,
+    p5 = 5,
+    p6 = 1,    
+//    p1 = 3,
+//    p2 = 7,
+//    p3 = 6,
+//    p4 = 4,
+//    p5 = 0,
+//    p6 = 1,
 } bldcPos;
 
 typedef union __attribute((packed)) /* Estructura declaración para los        */
