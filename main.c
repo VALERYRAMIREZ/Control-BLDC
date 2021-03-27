@@ -48,47 +48,66 @@
 #include <stdio.h>
 #include "mcc_generated_files/system.h"
 #include "motor.h"
+#include "teclado.h"
 /*
                          Main application
  */
 
 int main(void) {
-
-    uint16_t i;                     /* Inicialiazación de contador para el
-                                     * retardo de visualización, se debe borrar
-                                     * al terminar las pruebas.               */
+    uint8_t i = 0;
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
-    rEnc = 2;
-    tPWM = 0x1770;
-    dPWM = tPWM + rEnc;
-    bldc.S_Init(&rEnc,&dPWM,&tPWM);
-    for(i = 0; i < 30000; i++);     /* Retardo simple para visualización. Se    
-                                     * debe borrar al terminar las pruebas.   */
-    bldc.S_invert(true);
-    rEnc = 2;
-    tPWM = 0x1770;
-    dPWM = 0xbb7;    
-    bldc.sDir = true;
-    bldc.sMod = false;
-    bldc.motorFase = Motor_Hall_Sensor(PORTD, bldc.sDir);
+    Keyboard_Previous_State(&keys);         
     while(1)
     {
-        if(bldc.sMod == true)
+//        if(!bldc.initMotor && bldc.iMotor && bldc.sMod)
+//        {
+//            bldc.iMotor = false;
+//            /* Deshabilitar motor.                                        */
+//            bldc.sMod = false; 
+//        }
+        if(!bldc.initMotor && bldc.iMotor && bldc.sMod)
         {
-            bldc.S_Vel(200, bldc.sDir);            
-            bldc.sMod = false;         
+            bldc.S_invert(true);        
+            rEnc = 2;
+            tPWM = 0x176f;
+            dPWM = 0xbb7;    
+            bldc.sDir = false;
+            bldc.sMod = true;
+            bldc.motorFase = Motor_Next_Sec(Motor_Hall_Read((uint16_t *) &PORTD), bldc.sDir);
+            bldc.S_Vel(200, bldc.sDir); 
+            bldc.sMod = false;                 
         }
+        if(bldc.initMotor && !bldc.iMotor && bldc.sMod)
+        {
+            rEnc = 2;
+            tPWM = 0x176f;
+            dPWM = tPWM + rEnc;
+            bldc.pState = Motor_Hall_Read((uint16_t *) &PORTD); 
+            bldc.S_Init(&rEnc,&dPWM,&tPWM);             
+            bldc.iMotor = true;
+            bldc.sMod = false;                 
+        }        
     }
     return 0;
 }
 
 void TMR2_CallBack(void)
 {
-    bldc.sMod = true;
+    
 }
 
 void CN_CallBack(void)
 {
-    bldc.motorFase = Motor_Hall_Sensor(PORTD, bldc.sDir);
+    if(Motor_Hall_Read((uint16_t *) &PORTD) != bldc.pState)/* Determina si la */
+    {                               /* interrupción fue debido a cambio en los
+                                     * sensores de efecto Hall.               */
+        bldc.motorFase = Motor_Next_Sec(Motor_Hall_Read((uint16_t *) PORTD),
+                bldc.sDir);        
+    }
+    if((keys.aK & 0x000f) != ((keys.aK & 0x0f00) >> 8))
+    {
+        Keyboard_Check_State(&keys);
+        bldc.sMod = true;
+    }
 }

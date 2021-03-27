@@ -83,6 +83,17 @@ typedef enum
 //    p6 = 1,
 } bldcPos;
 
+typedef enum
+{
+            NO_ERROR = 0,
+            ERROR_SEC,
+            ERROR_COR,
+            ERROR_VOL,
+            ERROR_VEL,
+            ERROR_POS,
+            ERROR_DIR,
+} motorError;
+
 typedef union __attribute((packed)) /* Estructura declaración para los        */
 {                                   /* transistores de potencia.              */
     struct
@@ -106,9 +117,13 @@ typedef struct
     uint8_t vMax;                   /* Tensión máxima o nominal del motor.    */
     uint8_t cMax;                   /* Corriente máxima o nominal del motor.  */
     uint8_t aPos;                   /* Posición actual del motor.             */
+    uint8_t sError;
+    uint8_t pState;    
     bldcFases motorFase;
     bool sDir;                      /* Sentido de giro del motor.             */
-    bool sMod;
+    bool sMod;                      /* Bandera para modificar las rutinas del
+                                     * motor.                                 */
+    bool initMotor;
     bool iMotor;                    /* Bandera para iniciar o detener el
                                      * movimiento del motor.                  */
     bool (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
@@ -194,9 +209,12 @@ void Motor_Pos(uint8_t pos, bool dir);  /* Prototipo de función para establecer
 bool Motor_OC_Invert(bool invert);
 
 bool Motor_Fase_Act(bldcFases *edo, bool *dir);
- 
-bldcFases Motor_Hall_Sensor(uint16_t port, bool dir);
 
+uint8_t Motor_Hall_Read(uint16_t *port);
+
+bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir);
+
+void Motor_Error(void);
 #ifdef	__cplusplus
 extern "C" {
 #endif /* __cplusplus */

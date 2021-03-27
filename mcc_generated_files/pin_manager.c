@@ -92,8 +92,8 @@ void PIN_MANAGER_Initialize (void)
     CNPD4 = 0x0000;
     CNPD5 = 0x0000;
     CNPD6 = 0x0000;
-    CNPU1 = 0x0000;
-    CNPU2 = 0x0000;
+    CNPU1 = 0x00C0;
+    CNPU2 = 0x0300;
     CNPU3 = 0x0000;
     CNPU4 = 0x0000;
     CNPU5 = 0x0100;
@@ -129,6 +129,10 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Interrupt On Change: any
      ***************************************************************************/
+    CNEN1bits.CN6IE = 1;    //Pin : RB4
+    CNEN1bits.CN7IE = 1;    //Pin : RB5
+    CNEN2bits.CN24IE = 1;    //Pin : RB6
+    CNEN2bits.CN25IE = 1;    //Pin : RB7
     CNEN4bits.CN53IE = 1;    //Pin : RD8
     CNEN4bits.CN54IE = 1;    //Pin : RD9
     CNEN4bits.CN55IE = 1;    //Pin : RD10

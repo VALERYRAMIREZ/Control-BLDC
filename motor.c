@@ -17,6 +17,10 @@ uint16_t dPWM;                      /* Variable para almacenar el ciclo de
 
 Motor bldc =
 {
+    .pState = 0,
+    .sError = 0,
+    .initMotor = false,
+    .iMotor = false,
     .sTipo = brushless,
     .S_Init = Motor_PWM_ON_Init,
     .S_DeInit = Motor_PWM_ON_DeInit,
@@ -36,7 +40,7 @@ bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
     OC1_PrimaryValueSet(0);
     OC1_SecondaryValueSet(*periodo + *retardo);
     OC3_PrimaryValueSet(0);
-    OC3_SecondaryValueSet(*periodo);
+    OC3_SecondaryValueSet(*periodo + *retardo);
     OC5_PrimaryValueSet(0);
     OC5_SecondaryValueSet(*periodo+ *retardo);
     TMR2_Start();
@@ -372,23 +376,28 @@ bool Motor_OC_Invert(bool invert)
 
 bool Motor_Fase_Act(bldcFases *edo, bool *dir)
 {
+    bldc.pState = *edo;
     static motorInt actualT;
+    actualT = bldc.S_Sec(*edo); 
     (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
     (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        
     (actualT.T6 == true) ? OC9_SetLow() : OC9_SetHigh();
-    actualT = bldc.S_Sec(*edo); 
     *dir ? ((*edo > AB) ? 
                                (*edo = AC) : *edo) :
                 ((*edo < AC) ? 
                                (*edo = AB) : *edo);  
     return true;
 }
+uint8_t Motor_Hall_Read(uint16_t *port)
+{
+    return (*port & ((uint16_t) 0x700)) >> 8;
+}
 
-bldcFases Motor_Hall_Sensor(uint16_t port, bool dir)
+bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir)
 {
     bldcFases sec = 0;
-    uint8_t lectura = (port & 0x700) >> 8;
-    switch(lectura)
+    bldc.pState = hallPos;
+    switch(hallPos)
     {
         case p1:
         {
@@ -426,5 +435,28 @@ bldcFases Motor_Hall_Sensor(uint16_t port, bool dir)
         }
         break;
     }
+//        if((dir) && (sec >= AC) && (sec <= AB) && (bldc.pState != 0))
+//    {
+//        ((sec) != (bldc.pState + 1)) ? (bldc.sError = ERROR_SEC) :
+//                (bldc.sError = NO_ERROR);
+//    }
+//        else if(!(dir) && (sec >= AC) && (sec <= AB) && (bldc.pState != 0))
+//    {
+//        (!(sec) != (bldc.pState - 1)) ? (bldc.sError = ERROR_SEC) :
+//                (bldc.sError = NO_ERROR);        
+//    }
+//        else if((sec >= AC) && (sec <= AB) && (bldc.pState = 0))
+//    {
+//        bldc.sError = ERROR_SEC;
+//    }
+//    if(bldc.sError != NO_ERROR)
+//    {
+//        Motor_Error();
+//    }
     return sec;
+}
+
+void Motor_Error(void)
+{
+    
 }

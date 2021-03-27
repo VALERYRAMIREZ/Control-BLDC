@@ -1095,11 +1095,11 @@
   @Example
     <code>
     // Set RB3 high (1)
-    TEC4_SetHigh();
+    TEC3_SetHigh();
     </code>
 
 */
-#define TEC4_SetHigh()          (_LATB3 = 1)
+#define TEC3_SetHigh()          (_LATB3 = 1)
 /**
   @Summary
     Sets the GPIO pin, RB3, low using LATB3.
@@ -1119,11 +1119,11 @@
   @Example
     <code>
     // Set RB3 low (0)
-    TEC4_SetLow();
+    TEC3_SetLow();
     </code>
 
 */
-#define TEC4_SetLow()           (_LATB3 = 0)
+#define TEC3_SetLow()           (_LATB3 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RB3, using LATB3.
@@ -1143,11 +1143,11 @@
   @Example
     <code>
     // Toggle RB3
-    TEC4_Toggle();
+    TEC3_Toggle();
     </code>
 
 */
-#define TEC4_Toggle()           (_LATB3 ^= 1)
+#define TEC3_Toggle()           (_LATB3 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RB3.
@@ -1169,11 +1169,11 @@
     uint16_t portValue;
 
     // Read RB3
-    postValue = TEC4_GetValue();
+    postValue = TEC3_GetValue();
     </code>
 
 */
-#define TEC4_GetValue()         _RB3
+#define TEC3_GetValue()         _RB3
 /**
   @Summary
     Configures the GPIO pin, RB3, as an input.
@@ -1193,11 +1193,11 @@
   @Example
     <code>
     // Sets the RB3 as an input
-    TEC4_SetDigitalInput();
+    TEC3_SetDigitalInput();
     </code>
 
 */
-#define TEC4_SetDigitalInput()  (_TRISB3 = 1)
+#define TEC3_SetDigitalInput()  (_TRISB3 = 1)
 /**
   @Summary
     Configures the GPIO pin, RB3, as an output.
@@ -1217,11 +1217,11 @@
   @Example
     <code>
     // Sets the RB3 as an output
-    TEC4_SetDigitalOutput();
+    TEC3_SetDigitalOutput();
     </code>
 
 */
-#define TEC4_SetDigitalOutput() (_TRISB3 = 0)
+#define TEC3_SetDigitalOutput() (_TRISB3 = 0)
 /**
   @Summary
     Sets the GPIO pin, RB4, high using LATB4.
@@ -1241,11 +1241,11 @@
   @Example
     <code>
     // Set RB4 high (1)
-    TEC5_SetHigh();
+    TEC4_SetHigh();
     </code>
 
 */
-#define TEC5_SetHigh()          (_LATB4 = 1)
+#define TEC4_SetHigh()          (_LATB4 = 1)
 /**
   @Summary
     Sets the GPIO pin, RB4, low using LATB4.
@@ -1265,11 +1265,11 @@
   @Example
     <code>
     // Set RB4 low (0)
-    TEC5_SetLow();
+    TEC4_SetLow();
     </code>
 
 */
-#define TEC5_SetLow()           (_LATB4 = 0)
+#define TEC4_SetLow()           (_LATB4 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RB4, using LATB4.
@@ -1289,11 +1289,11 @@
   @Example
     <code>
     // Toggle RB4
-    TEC5_Toggle();
+    TEC4_Toggle();
     </code>
 
 */
-#define TEC5_Toggle()           (_LATB4 ^= 1)
+#define TEC4_Toggle()           (_LATB4 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RB4.
@@ -1315,11 +1315,11 @@
     uint16_t portValue;
 
     // Read RB4
-    postValue = TEC5_GetValue();
+    postValue = TEC4_GetValue();
     </code>
 
 */
-#define TEC5_GetValue()         _RB4
+#define TEC4_GetValue()         _RB4
 /**
   @Summary
     Configures the GPIO pin, RB4, as an input.
@@ -1339,11 +1339,11 @@
   @Example
     <code>
     // Sets the RB4 as an input
-    TEC5_SetDigitalInput();
+    TEC4_SetDigitalInput();
     </code>
 
 */
-#define TEC5_SetDigitalInput()  (_TRISB4 = 1)
+#define TEC4_SetDigitalInput()  (_TRISB4 = 1)
 /**
   @Summary
     Configures the GPIO pin, RB4, as an output.
@@ -1363,11 +1363,11 @@
   @Example
     <code>
     // Sets the RB4 as an output
-    TEC5_SetDigitalOutput();
+    TEC4_SetDigitalOutput();
     </code>
 
 */
-#define TEC5_SetDigitalOutput() (_TRISB4 = 0)
+#define TEC4_SetDigitalOutput() (_TRISB4 = 0)
 /**
   @Summary
     Sets the GPIO pin, RB5, high using LATB5.
@@ -1387,11 +1387,11 @@
   @Example
     <code>
     // Set RB5 high (1)
-    TEC6_SetHigh();
+    TEC5_SetHigh();
     </code>
 
 */
-#define TEC6_SetHigh()          (_LATB5 = 1)
+#define TEC5_SetHigh()          (_LATB5 = 1)
 /**
   @Summary
     Sets the GPIO pin, RB5, low using LATB5.
@@ -1411,11 +1411,11 @@
   @Example
     <code>
     // Set RB5 low (0)
-    TEC6_SetLow();
+    TEC5_SetLow();
     </code>
 
 */
-#define TEC6_SetLow()           (_LATB5 = 0)
+#define TEC5_SetLow()           (_LATB5 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RB5, using LATB5.
@@ -1435,11 +1435,11 @@
   @Example
     <code>
     // Toggle RB5
-    TEC6_Toggle();
+    TEC5_Toggle();
     </code>
 
 */
-#define TEC6_Toggle()           (_LATB5 ^= 1)
+#define TEC5_Toggle()           (_LATB5 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RB5.
@@ -1461,11 +1461,11 @@
     uint16_t portValue;
 
     // Read RB5
-    postValue = TEC6_GetValue();
+    postValue = TEC5_GetValue();
     </code>
 
 */
-#define TEC6_GetValue()         _RB5
+#define TEC5_GetValue()         _RB5
 /**
   @Summary
     Configures the GPIO pin, RB5, as an input.
@@ -1485,11 +1485,11 @@
   @Example
     <code>
     // Sets the RB5 as an input
-    TEC6_SetDigitalInput();
+    TEC5_SetDigitalInput();
     </code>
 
 */
-#define TEC6_SetDigitalInput()  (_TRISB5 = 1)
+#define TEC5_SetDigitalInput()  (_TRISB5 = 1)
 /**
   @Summary
     Configures the GPIO pin, RB5, as an output.
@@ -1509,11 +1509,11 @@
   @Example
     <code>
     // Sets the RB5 as an output
-    TEC6_SetDigitalOutput();
+    TEC5_SetDigitalOutput();
     </code>
 
 */
-#define TEC6_SetDigitalOutput() (_TRISB5 = 0)
+#define TEC5_SetDigitalOutput() (_TRISB5 = 0)
 /**
   @Summary
     Sets the GPIO pin, RB6, high using LATB6.
@@ -1533,11 +1533,11 @@
   @Example
     <code>
     // Set RB6 high (1)
-    TEC7_SetHigh();
+    TEC6_SetHigh();
     </code>
 
 */
-#define TEC7_SetHigh()          (_LATB6 = 1)
+#define TEC6_SetHigh()          (_LATB6 = 1)
 /**
   @Summary
     Sets the GPIO pin, RB6, low using LATB6.
@@ -1557,11 +1557,11 @@
   @Example
     <code>
     // Set RB6 low (0)
-    TEC7_SetLow();
+    TEC6_SetLow();
     </code>
 
 */
-#define TEC7_SetLow()           (_LATB6 = 0)
+#define TEC6_SetLow()           (_LATB6 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RB6, using LATB6.
@@ -1581,11 +1581,11 @@
   @Example
     <code>
     // Toggle RB6
-    TEC7_Toggle();
+    TEC6_Toggle();
     </code>
 
 */
-#define TEC7_Toggle()           (_LATB6 ^= 1)
+#define TEC6_Toggle()           (_LATB6 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RB6.
@@ -1607,11 +1607,11 @@
     uint16_t portValue;
 
     // Read RB6
-    postValue = TEC7_GetValue();
+    postValue = TEC6_GetValue();
     </code>
 
 */
-#define TEC7_GetValue()         _RB6
+#define TEC6_GetValue()         _RB6
 /**
   @Summary
     Configures the GPIO pin, RB6, as an input.
@@ -1631,11 +1631,11 @@
   @Example
     <code>
     // Sets the RB6 as an input
-    TEC7_SetDigitalInput();
+    TEC6_SetDigitalInput();
     </code>
 
 */
-#define TEC7_SetDigitalInput()  (_TRISB6 = 1)
+#define TEC6_SetDigitalInput()  (_TRISB6 = 1)
 /**
   @Summary
     Configures the GPIO pin, RB6, as an output.
@@ -1655,11 +1655,11 @@
   @Example
     <code>
     // Sets the RB6 as an output
-    TEC7_SetDigitalOutput();
+    TEC6_SetDigitalOutput();
     </code>
 
 */
-#define TEC7_SetDigitalOutput() (_TRISB6 = 0)
+#define TEC6_SetDigitalOutput() (_TRISB6 = 0)
 /**
   @Summary
     Sets the GPIO pin, RB7, high using LATB7.
@@ -1679,11 +1679,11 @@
   @Example
     <code>
     // Set RB7 high (1)
-    IO_RB7_SetHigh();
+    TEC7_SetHigh();
     </code>
 
 */
-#define IO_RB7_SetHigh()          (_LATB7 = 1)
+#define TEC7_SetHigh()          (_LATB7 = 1)
 /**
   @Summary
     Sets the GPIO pin, RB7, low using LATB7.
@@ -1703,11 +1703,11 @@
   @Example
     <code>
     // Set RB7 low (0)
-    IO_RB7_SetLow();
+    TEC7_SetLow();
     </code>
 
 */
-#define IO_RB7_SetLow()           (_LATB7 = 0)
+#define TEC7_SetLow()           (_LATB7 = 0)
 /**
   @Summary
     Toggles the GPIO pin, RB7, using LATB7.
@@ -1727,11 +1727,11 @@
   @Example
     <code>
     // Toggle RB7
-    IO_RB7_Toggle();
+    TEC7_Toggle();
     </code>
 
 */
-#define IO_RB7_Toggle()           (_LATB7 ^= 1)
+#define TEC7_Toggle()           (_LATB7 ^= 1)
 /**
   @Summary
     Reads the value of the GPIO pin, RB7.
@@ -1753,11 +1753,11 @@
     uint16_t portValue;
 
     // Read RB7
-    postValue = IO_RB7_GetValue();
+    postValue = TEC7_GetValue();
     </code>
 
 */
-#define IO_RB7_GetValue()         _RB7
+#define TEC7_GetValue()         _RB7
 /**
   @Summary
     Configures the GPIO pin, RB7, as an input.
@@ -1777,11 +1777,11 @@
   @Example
     <code>
     // Sets the RB7 as an input
-    IO_RB7_SetDigitalInput();
+    TEC7_SetDigitalInput();
     </code>
 
 */
-#define IO_RB7_SetDigitalInput()  (_TRISB7 = 1)
+#define TEC7_SetDigitalInput()  (_TRISB7 = 1)
 /**
   @Summary
     Configures the GPIO pin, RB7, as an output.
@@ -1801,11 +1801,11 @@
   @Example
     <code>
     // Sets the RB7 as an output
-    IO_RB7_SetDigitalOutput();
+    TEC7_SetDigitalOutput();
     </code>
 
 */
-#define IO_RB7_SetDigitalOutput() (_TRISB7 = 0)
+#define TEC7_SetDigitalOutput() (_TRISB7 = 0)
 /**
   @Summary
     Sets the GPIO pin, RB8, high using LATB8.
