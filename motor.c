@@ -17,7 +17,7 @@ uint16_t dPWM;                      /* Variable para almacenar el ciclo de
 
 Motor bldc =
 {
-    .pState = 0,
+    .pPos = 0,
     .sError = 0,
     .initMotor = false,
     .iMotor = false,
@@ -362,7 +362,7 @@ void Motor_Vel(uint16_t rpm, bool dir)
     }
     else if(rpm > 0)
     {
-        Motor_Fase_Act(&bldc.motorFase, &dir);
+        Motor_Fase_Act(&bldc.nextFase, &dir);
     }
 }
 
@@ -376,7 +376,6 @@ bool Motor_OC_Invert(bool invert)
 
 bool Motor_Fase_Act(bldcFases *edo, bool *dir)
 {
-    bldc.pState = *edo;
     static motorInt actualT;
     actualT = bldc.S_Sec(*edo); 
     (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
@@ -388,15 +387,21 @@ bool Motor_Fase_Act(bldcFases *edo, bool *dir)
                                (*edo = AB) : *edo);  
     return true;
 }
+
 uint8_t Motor_Hall_Read(uint16_t *port)
 {
-    return (*port & ((uint16_t) 0x700)) >> 8;
+    uint16_t hall = 0;
+//    hall = *port;
+//    hall = hall & 0x700;
+    hall = ((*port & ((uint16_t) 0x700)) >> 8);
+    return hall;
+//    return (*port & ((uint16_t) 0x700)) >> 8;
 }
 
 bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir)
 {
     bldcFases sec = 0;
-    bldc.pState = hallPos;
+//    bldc.pPos = hallPos;
     switch(hallPos)
     {
         case p1:
@@ -435,17 +440,17 @@ bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir)
         }
         break;
     }
-//        if((dir) && (sec >= AC) && (sec <= AB) && (bldc.pState != 0))
+//        if((dir) && (sec >= AC) && (sec <= AB) && (bldc.pPos != 0))
 //    {
-//        ((sec) != (bldc.pState + 1)) ? (bldc.sError = ERROR_SEC) :
+//        ((sec) != (bldc.pPos + 1)) ? (bldc.sError = ERROR_SEC) :
 //                (bldc.sError = NO_ERROR);
 //    }
-//        else if(!(dir) && (sec >= AC) && (sec <= AB) && (bldc.pState != 0))
+//        else if(!(dir) && (sec >= AC) && (sec <= AB) && (bldc.pPos != 0))
 //    {
-//        (!(sec) != (bldc.pState - 1)) ? (bldc.sError = ERROR_SEC) :
+//        (!(sec) != (bldc.pPos - 1)) ? (bldc.sError = ERROR_SEC) :
 //                (bldc.sError = NO_ERROR);        
 //    }
-//        else if((sec >= AC) && (sec <= AB) && (bldc.pState = 0))
+//        else if((sec >= AC) && (sec <= AB) && (bldc.pPos = 0))
 //    {
 //        bldc.sError = ERROR_SEC;
 //    }

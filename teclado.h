@@ -66,24 +66,16 @@ typedef union __attribute((packed))
 {
     struct
     {
-        struct
-        {
-            uint16_t t1PrevState : 1;
-            uint16_t t2PrevState : 1;
-            uint16_t t3PrevState : 1;
-            uint16_t t4PrevState : 1;
-            uint16_t rest        : 4;
-        } pS;
-        struct
-        {
-            uint16_t t1ActState  : 1;
-            uint16_t t2ActState  : 1;
-            uint16_t t3ActState  : 1;
-            uint16_t t4ActState  : 1;
-            uint16_t rest        : 4;            
-        } aS;
+        uint8_t t1PrevState : 1;
+        uint8_t t2PrevState : 1;
+        uint8_t t3PrevState : 1;
+        uint8_t t4PrevState : 1;
+        uint8_t t1ActState  : 1;
+        uint8_t t2ActState  : 1;
+        uint8_t t3ActState  : 1;
+        uint8_t t4ActState  : 1;
     };
-    uint16_t aK;
+    uint8_t aK;
 } keyboard;
 
 extern keyboard keys;
@@ -92,7 +84,7 @@ void Keyboard_Previous_State(keyboard *key);
 
 void Keyboard_Actual_State(keyboard *key);
 
-void Keyboard_Check_State(keyboard *keyboard);
+void Keyboard_Update_Button(keyboard *keyboard);
 
 #ifdef	__cplusplus
 extern "C" {

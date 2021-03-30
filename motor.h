@@ -116,10 +116,11 @@ typedef struct
     uint8_t rMax;                   /* Velocidad de giro máxima del motor.    */
     uint8_t vMax;                   /* Tensión máxima o nominal del motor.    */
     uint8_t cMax;                   /* Corriente máxima o nominal del motor.  */
-    uint8_t aPos;                   /* Posición actual del motor.             */
-    uint8_t sError;
-    uint8_t pState;    
-    bldcFases motorFase;
+    uint8_t sError;                 /* Código de error del último error.      */
+    bldcPos pPos;                   /* estado previo de los sensores Hall.    */
+    bldcPos aPos;                   /* Estado actual de los sensores Hall.    */
+    bldcFases actualFase;           /* Fase actualmente funcionando.          */
+    bldcFases nextFase;             /* Próxima fase a activar.                */
     bool sDir;                      /* Sentido de giro del motor.             */
     bool sMod;                      /* Bandera para modificar las rutinas del
                                      * motor.                                 */
@@ -128,8 +129,7 @@ typedef struct
                                      * movimiento del motor.                  */
     bool (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
     bool (*S_DeInit) (void);
-    motorInt (*S_Sec) (bldcFases);  /* OJO: Esta función se va a quitar ya que
-                                     * va dentro de la función S_Vel.         */
+    motorInt (*S_Sec) (bldcFases);  
     void (*S_Vel) (uint16_t, bool); /* Puntero a función para 
                                      * establecer la velocidad del motor.     */
     void (*S_Pos) (uint8_t *, bool *dir);/* Puntero a función para

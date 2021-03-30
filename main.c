@@ -54,40 +54,43 @@
  */
 
 int main(void) {
-    uint8_t i = 0;
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
-    Keyboard_Previous_State(&keys);         
+    Keyboard_Previous_State(&keys);
+//    bldc.pPos = Motor_Hall_Read((uint16_t *) &PORTD);
     while(1)
     {
-//        if(!bldc.initMotor && bldc.iMotor && bldc.sMod)
-//        {
-//            bldc.iMotor = false;
-//            /* Deshabilitar motor.                                        */
-//            bldc.sMod = false; 
-//        }
-        if(!bldc.initMotor && bldc.iMotor && bldc.sMod)
+        if(bldc.sMod)
         {
-            bldc.S_invert(true);        
-            rEnc = 2;
-            tPWM = 0x176f;
-            dPWM = 0xbb7;    
-            bldc.sDir = false;
-            bldc.sMod = true;
-            bldc.motorFase = Motor_Next_Sec(Motor_Hall_Read((uint16_t *) &PORTD), bldc.sDir);
-            bldc.S_Vel(200, bldc.sDir); 
-            bldc.sMod = false;                 
+    //        if(!bldc.initMotor && bldc.iMotor && bldc.sMod)
+    //        {
+    //            bldc.iMotor = false;
+    //            /* Deshabilitar motor.                                        */
+    //            bldc.sMod = false; 
+    //        }
+            if(bldc.initMotor && bldc.iMotor)
+            {
+                bldc.S_invert(true);        
+                rEnc = 2;
+                tPWM = 0x176f;
+                dPWM = 0xbb7;    
+                bldc.sDir = true;
+                bldc.sMod = true;
+//                bldc.pPos = Motor_Hall_Read((uint16_t *) &PORTD);
+                bldc.nextFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
+                bldc.S_Vel(200, bldc.sDir);                
+            }
+            if(bldc.initMotor && !bldc.iMotor)
+            {
+                rEnc = 2;
+                tPWM = 0x176f;
+                dPWM = tPWM + rEnc;
+                bldc.pPos = Motor_Hall_Read((uint16_t *) &PORTD); 
+                bldc.S_Init(&rEnc,&dPWM,&tPWM);             
+                bldc.iMotor = true;               
+            }
+            bldc.sMod = false;
         }
-        if(bldc.initMotor && !bldc.iMotor && bldc.sMod)
-        {
-            rEnc = 2;
-            tPWM = 0x176f;
-            dPWM = tPWM + rEnc;
-            bldc.pState = Motor_Hall_Read((uint16_t *) &PORTD); 
-            bldc.S_Init(&rEnc,&dPWM,&tPWM);             
-            bldc.iMotor = true;
-            bldc.sMod = false;                 
-        }        
     }
     return 0;
 }
@@ -99,15 +102,34 @@ void TMR2_CallBack(void)
 
 void CN_CallBack(void)
 {
-    if(Motor_Hall_Read((uint16_t *) &PORTD) != bldc.pState)/* Determina si la */
-    {                               /* interrupción fue debido a cambio en los
-                                     * sensores de efecto Hall.               */
-        bldc.motorFase = Motor_Next_Sec(Motor_Hall_Read((uint16_t *) PORTD),
-                bldc.sDir);        
+    /* Determina si hubo un cambio de estado en la posición del motor.        */
+    
+    if((Motor_Hall_Read((uint16_t *) &PORTD)) != (bldc.pPos)
+            && bldc.initMotor)      /* Determina si la interrupción  fue      */
+    {                               /* debido a cambio en los sensores de efecto
+                                     * Hall.                                  */
+        bldc.pPos = Motor_Hall_Read((uint16_t *) &PORTD);
+        bldc.nextFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
+        bldc.S_Vel(200, bldc.sDir);        
     }
-    if((keys.aK & 0x000f) != ((keys.aK & 0x0f00) >> 8))
+    
+    /* Determina si se presionó un botón del teclado.                         */
+    
+    Keyboard_Actual_State(&keys);
+    if((keys.t1PrevState && !keys.t1ActState) 
+            || (keys.t2PrevState && !keys.t2ActState)
+            || (keys.t3PrevState && !keys.t3ActState)
+            || (keys.t4PrevState && !keys.t4ActState))
     {
-        Keyboard_Check_State(&keys);
+        Keyboard_Previous_State(&keys);
+    }
+    else if((!keys.t1PrevState && keys.t1ActState) 
+            || (!keys.t2PrevState && keys.t2ActState)
+            || (!keys.t3PrevState && keys.t3ActState)
+            || (!keys.t4PrevState && keys.t4ActState))
+    {
+        Keyboard_Update_Button(&keys);
+        Keyboard_Previous_State(&keys);
         bldc.sMod = true;
     }
 }
