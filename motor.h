@@ -129,7 +129,7 @@ typedef struct
                                      * movimiento del motor.                  */
     bool isRunning;
     bool (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
-    bool (*S_DeInit) (void);
+    bool (*S_DeInit) (uint16_t *, uint16_t *, uint16_t *);
     motorInt (*S_Sec) (bldcFases);  
     void (*S_Vel) (uint16_t, bool); /* Puntero a función para 
                                      * establecer la velocidad del motor.     */
@@ -188,7 +188,7 @@ extern Motor bldc;
 
 bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo);
 
-bool Motor_PWM_ON_DeInit(void);
+bool Motor_PWM_ON_DeInit(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo);
 
 motorInt Motor_PWM_ON_Sec(bldcFases tEstado);
 

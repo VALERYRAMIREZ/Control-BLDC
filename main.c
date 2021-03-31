@@ -63,8 +63,7 @@ int main(void) {
         {
             if(!bldc.initMotor)
             {
-                /* Deshabilitar motor.                                        */
-                bldc.S_DeInit();
+                bldc.S_DeInit(&rEnc,&dPWM,&tPWM);
                 if(bldc.isRunning)
                 {
                     bldc.S_invert(false);
@@ -72,18 +71,10 @@ int main(void) {
                     bldc.iMotor = false;
                 }
             }
-//            if(bldc.initMotor && !bldc.iMotor && bldc.isRunning)
-//            {
-//                bldc.S_Vel(0, bldc.sDir);
-//                bldc.isRunning = false;
-//            }
             if(bldc.initMotor && bldc.iMotor)
             {
                 bldc.S_invert(true);        
-                rEnc = 2;
-                tPWM = 0x176f;
                 dPWM = 0xbb7;    
-//                bldc.sDir = true;
                 bldc.nextFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
                 bldc.S_Vel(200, bldc.sDir);
                 bldc.isRunning = true;
@@ -117,7 +108,7 @@ void CN_CallBack(void)
 {
     /* Determina si hubo un cambio de estado en la posición del motor.        */
     
-    if((Motor_Hall_Read((uint16_t *) &PORTD)) != (bldc.pPos)
+    if((bldc.aPos = Motor_Hall_Read((uint16_t *) &PORTD)) != (bldc.pPos)
             && bldc.initMotor && bldc.iMotor)/* Determina si la interrupción  */
     {                               /* fue debido a cambio en los sensores de
                                      * efecto Hall.                           */

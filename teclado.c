@@ -25,7 +25,7 @@ void Keyboard_Update_Button(keyboard *keyboard)
     {
         bldc.initMotor ^= 1;
     }
-    if(!keyboard->t2PrevState && keyboard->t2ActState)
+    if(!keyboard->t2PrevState && keyboard->t2ActState && bldc.initMotor)
     {
         bldc.iMotor ^= 1;
     }

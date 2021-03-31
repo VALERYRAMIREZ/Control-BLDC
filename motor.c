@@ -47,17 +47,20 @@ bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
     TMR2_Start();
     return true;
 }
-bool Motor_PWM_ON_DeInit(void)
+bool Motor_PWM_ON_DeInit(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
 {
-    OC1_PrimaryValueSet(tPWM +rEnc);
-    OC1_SecondaryValueSet(0);
-    OC3_PrimaryValueSet(tPWM +rEnc);
-    OC3_SecondaryValueSet(0);
-    OC5_PrimaryValueSet(tPWM +rEnc);
-    OC5_SecondaryValueSet(0);
+    HAB1_SetHigh();
+    HAB2_SetHigh();    
+    HAB3_SetHigh();
     OC2_SetHigh();
     OC4_SetHigh();
-    OC9_SetHigh();
+    OC9_SetHigh();    
+    OC1_PrimaryValueSet(0);
+    OC1_SecondaryValueSet(*periodo + *retardo);
+    OC3_PrimaryValueSet(0);
+    OC3_SecondaryValueSet(*periodo + *retardo);
+    OC5_PrimaryValueSet(0);
+    OC5_SecondaryValueSet(*periodo + *retardo);
     TMR2_Stop();
     return true;
 }
