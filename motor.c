@@ -21,6 +21,7 @@ Motor bldc =
     .sError = 0,
     .initMotor = false,
     .iMotor = false,
+    .isRunning = false,
     .sTipo = brushless,
     .S_Init = Motor_PWM_ON_Init,
     .S_DeInit = Motor_PWM_ON_DeInit,
@@ -56,7 +57,8 @@ bool Motor_PWM_ON_DeInit(void)
     OC5_SecondaryValueSet(0);
     OC2_SetHigh();
     OC4_SetHigh();
-    OC9_SetHigh(); 
+    OC9_SetHigh();
+    TMR2_Stop();
     return true;
 }
 
@@ -377,6 +379,8 @@ bool Motor_OC_Invert(bool invert)
 bool Motor_Fase_Act(bldcFases *edo, bool *dir)
 {
     static motorInt actualT;
+    bldc.S_Sec(*edo);
+    
     actualT = bldc.S_Sec(*edo); 
     (actualT.T2 == true) ? OC2_SetLow() : OC2_SetHigh();
     (actualT.T4 == true) ? OC4_SetLow() : OC4_SetHigh();        

@@ -127,6 +127,7 @@ typedef struct
     bool initMotor;
     bool iMotor;                    /* Bandera para iniciar o detener el
                                      * movimiento del motor.                  */
+    bool isRunning;
     bool (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
     bool (*S_DeInit) (void);
     motorInt (*S_Sec) (bldcFases);  

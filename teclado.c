@@ -23,11 +23,15 @@ void Keyboard_Update_Button(keyboard *keyboard)
 {
     if(!keyboard->t1PrevState && keyboard->t1ActState)
     {
-        bldc.initMotor = true;
+        bldc.initMotor ^= 1;
     }
     if(!keyboard->t2PrevState && keyboard->t2ActState)
     {
-        bldc.iMotor = true;
+        bldc.iMotor ^= 1;
+    }
+    if(!keyboard->t3PrevState && keyboard->t3ActState)
+    {
+        bldc.sDir ^= 1;
     }
 //    Keyboard_Actual_State(keyboard);
 //    if(keyboard->t1PrevState && !keyboard->t1ActState)
