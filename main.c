@@ -113,7 +113,8 @@ void CN_CallBack(void)
             && bldc.initMotor && bldc.iMotor)/* Determina si la interrupción  */
     {                               /* fue debido a cambio en los sensores de
                                      * efecto Hall.                           */
-        if(Motor_Pos(&bldc.aPos, &bldc.sDir))
+        if(Motor_Pos(&bldc.aPos, &bldc.sDir) && (bldc.initMotor || bldc.iMotor
+                || bldc.isRunning))
         {
             Error_Handler(ERROR_POS);
         }

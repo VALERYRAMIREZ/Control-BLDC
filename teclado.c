@@ -1,4 +1,5 @@
 #include "teclado.h"
+#include "error.h"
 #include "motor.h"
 
 keyboard keys;
@@ -21,7 +22,7 @@ void Keyboard_Actual_State(keyboard *key)
 
 void Keyboard_Update_Button(keyboard *keyboard)
 {
-    if(!keyboard->t1PrevState && keyboard->t1ActState)
+    if(!keyboard->t1PrevState && keyboard->t1ActState && (errorCod == NO_ERROR))
     {
         bldc.initMotor ^= 1;
     }
@@ -32,43 +33,5 @@ void Keyboard_Update_Button(keyboard *keyboard)
     if(!keyboard->t3PrevState && keyboard->t3ActState)
     {
         bldc.sDir ^= 1;
-    }
-//    Keyboard_Actual_State(keyboard);
-//    if(keyboard->t1PrevState && !keyboard->t1ActState)
-//    {
-//        keyboard->t1PrevState = keyboard->t1ActState;
-//    }
-//    if(!keyboard->t1PrevState && keyboard->t1ActState)
-//    {
-//        bldc.initMotor = true;
-//        keyboard->t1PrevState = keyboard->t1ActState;
-//    }
-//    
-//    if(keyboard->t2PrevState && !keyboard->t2ActState)
-//    {
-//        keyboard->t2PrevState = keyboard->t2ActState;
-//    }
-//    if(!keyboard->t2PrevState && keyboard->t2ActState)
-//    {
-//        bldc.initMotor = false;
-//        keyboard->t2PrevState = keyboard->t2ActState;
-//    }
-//    if(keyboard->t3PrevState && !keyboard->t3ActState)
-//    {
-//        keyboard->t3PrevState = keyboard->t3ActState;
-//    }
-//    if(!keyboard->t3PrevState && keyboard->t3ActState)
-//    {
-//        bldc.iMotor = true;
-//        keyboard->t3PrevState = keyboard->t3ActState;      
-//    }    
-//    if(keyboard->t4PrevState && !keyboard->t4ActState)
-//    {
-//        keyboard->t4PrevState = keyboard->t4ActState;
-//    }
-//    if(!keyboard->t4PrevState && keyboard->t4ActState)
-//    {
-//        bldc.initMotor = false;
-//        keyboard->t4PrevState = keyboard->t4ActState;       
-//    }    
+    }   
 }

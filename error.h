@@ -50,6 +50,8 @@ typedef enum
             ERROR_POS,
             ERROR_DIR,
 } errCod;
+
+extern errCod errorCod;
 // Comment a function and leverage automatic documentation with slash star star
 /**
     <p><b>Function prototype:</b></p>

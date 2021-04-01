@@ -391,7 +391,8 @@ bool Motor_Pos(bldcPos *pos, bool *dir)
                     || ((*pos == P4) && (bldc.pPos != P3))
                     || ((*pos == P5) && (bldc.pPos != P4))
                     || ((*pos == P6) && (bldc.pPos != P5))
-                    || ((*pos == P1) && (bldc.pPos != P6)))
+                    || ((*pos == P1) && (bldc.pPos != P6))
+                    || (*pos == Pinv0) || (*pos == Pinv1))
             {
                 error = true;
             }
@@ -404,7 +405,8 @@ bool Motor_Pos(bldcPos *pos, bool *dir)
                     || ((*pos == P4) && (bldc.pPos != P5))
                     || ((*pos == P3) && (bldc.pPos != P4))
                     || ((*pos == P2) && (bldc.pPos != P3))
-                    || ((*pos == P1) && (bldc.pPos != P2)))
+                    || ((*pos == P1) && (bldc.pPos != P2))
+                    || (*pos == Pinv0) || (*pos == Pinv1))
             {
                 error = true;
             }            
