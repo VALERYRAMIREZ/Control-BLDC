@@ -47,6 +47,7 @@
 */
 #include <stdio.h>
 #include "mcc_generated_files/system.h"
+#include "error.h"
 #include "motor.h"
 #include "teclado.h"
 /*
@@ -112,8 +113,12 @@ void CN_CallBack(void)
             && bldc.initMotor && bldc.iMotor)/* Determina si la interrupción  */
     {                               /* fue debido a cambio en los sensores de
                                      * efecto Hall.                           */
-        bldc.pPos = Motor_Hall_Read((uint16_t *) &PORTD);
-        bldc.nextFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
+        if(Motor_Pos(&bldc.aPos, &bldc.sDir))
+        {
+            Error_Handler(ERROR_POS);
+        }
+        bldc.pPos = bldc.aPos;
+        bldc.nextFase = Motor_Next_Sec(bldc.aPos, bldc.sDir);
         bldc.S_Vel(200, bldc.sDir);        
     }
     

@@ -69,30 +69,19 @@ typedef enum
 
 typedef enum
 {
-    p1 = 3,
-    p2 = 2,
-    p3 = 6,
-    p4 = 4,
-    p5 = 5,
-    p6 = 1,    
-//    p1 = 3,
-//    p2 = 7,
-//    p3 = 6,
-//    p4 = 4,
-//    p5 = 0,
-//    p6 = 1,
+    P1 = 3,
+    P2 = 2,
+    P3 = 6,
+    P4 = 4,
+    P5 = 5,
+    P6 = 1,    
+//    P1 = 3,
+//    P2 = 7,
+//    P3 = 6,
+//    P4 = 4,
+//    P5 = 0,
+//    P6 = 1,
 } bldcPos;
-
-typedef enum
-{
-            NO_ERROR = 0,
-            ERROR_SEC,
-            ERROR_COR,
-            ERROR_VOL,
-            ERROR_VEL,
-            ERROR_POS,
-            ERROR_DIR,
-} motorError;
 
 typedef union __attribute((packed)) /* Estructura declaración para los        */
 {                                   /* transistores de potencia.              */
@@ -203,7 +192,7 @@ void Motor_Vel(uint16_t rpm, bool dir); /* Prototipo de función para establecer
                                          * la velocidad de giro y el sentido de
                                          * giro del motor.                    */
  
-void Motor_Pos(uint8_t pos, bool dir);  /* Prototipo de función para establecer
+bool Motor_Pos(bldcPos *pos, bool *dir);/* Prototipo de función para establecer
                                          * la posición que debe alcanzar la 
                                          * flecha del motor.                  */
 

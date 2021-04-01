@@ -379,6 +379,46 @@ bool Motor_OC_Invert(bool invert)
     return true;
 }
 
+bool Motor_Pos(bldcPos *pos, bool *dir)
+{
+    bool error = 0;
+    switch(*dir)
+    {
+        case true:
+        {
+            if(((*pos == P2) && (bldc.pPos != P1)) 
+                    || ((*pos == P3) && (bldc.pPos != P2))
+                    || ((*pos == P4) && (bldc.pPos != P3))
+                    || ((*pos == P5) && (bldc.pPos != P4))
+                    || ((*pos == P6) && (bldc.pPos != P5))
+                    || ((*pos == P1) && (bldc.pPos != P6)))
+            {
+                error = true;
+            }
+        }
+        break;
+        case false:
+        {
+            if(((*pos == P6) && (bldc.pPos != P1)) 
+                    || ((*pos == P5) && (bldc.pPos != P6))
+                    || ((*pos == P4) && (bldc.pPos != P5))
+                    || ((*pos == P3) && (bldc.pPos != P4))
+                    || ((*pos == P2) && (bldc.pPos != P3))
+                    || ((*pos == P1) && (bldc.pPos != P2)))
+            {
+                error = true;
+            }            
+        }
+        break;
+        default:
+        {
+            __asm("nop");
+        }
+        break;
+    }
+    return error;
+}
+
 bool Motor_Fase_Act(bldcFases *edo, bool *dir)
 {
     static motorInt actualT;
@@ -411,32 +451,32 @@ bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir)
 //    bldc.pPos = hallPos;
     switch(hallPos)
     {
-        case p1:
+        case P1:
         {
             sec = dir ? AB : AC;
         }
         break;
-        case p2:
+        case P2:
         {
             sec = dir ? AC : BC;
         }
         break;
-        case p3:
+        case P3:
         {
             sec = dir ? BC : BA;          
         }
         break;
-        case p4:
+        case P4:
         {
             sec = dir ? BA : CA;          
         }
         break;
-        case p5:
+        case P5:
         {
             sec = dir ? CA : CB;          
         }
         break;
-        case p6:
+        case P6:
         {
             sec = dir ? CB : AB;        
         }
@@ -470,5 +510,13 @@ bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir)
 
 void Motor_Error(void)
 {
-    
+    bldc.S_DeInit(&rEnc,&dPWM,&tPWM);
+    if(bldc.isRunning)
+    {
+        bldc.S_invert(false);
+        bldc.isRunning = false;
+        bldc.iMotor = false;
+        bldc.initMotor = false;
+    }
+    /* Encender LED de error y enviar mensaje a pantalla.                     */
 }
