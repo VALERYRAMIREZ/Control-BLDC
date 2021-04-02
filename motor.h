@@ -58,6 +58,7 @@ typedef enum
 
 typedef enum                
 {
+    AA = 0,
     AC = 1,
     BC = 2,
     BA = 3,
@@ -110,8 +111,8 @@ typedef struct
     uint8_t sError;                 /* Código de error del último error.      */
     bldcPos pPos;                   /* estado previo de los sensores Hall.    */
     bldcPos aPos;                   /* Estado actual de los sensores Hall.    */
-    bldcFases actualFase;           /* Fase actualmente funcionando.          */
-    bldcFases nextFase;             /* Próxima fase a activar.                */
+    bldcFases aFase;                /* Fase actualmente funcionando.          */
+    bldcFases nFase;                /* Próxima fase a activar.                */
     bool sDir;                      /* Sentido de giro del motor.             */
     bool sMod;                      /* Bandera para modificar las rutinas del
                                      * motor.                                 */
@@ -193,10 +194,6 @@ char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
 void Motor_Vel(uint16_t rpm, bool dir); /* Prototipo de función para establecer
                                          * la velocidad de giro y el sentido de
                                          * giro del motor.                    */
- 
-bool Motor_Pos(bldcPos *pos, bool *dir);/* Prototipo de función para establecer
-                                         * la posición que debe alcanzar la 
-                                         * flecha del motor.                  */
 
 bool Motor_OC_Invert(bool invert);
 
@@ -205,6 +202,13 @@ bool Motor_Fase_Act(bldcFases *edo, bool *dir);
 uint8_t Motor_Hall_Read(uint16_t *port);
 
 bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir);
+
+bool Motor_Error_Sec(bldcFases *fase, bool *dir);
+
+bool Motor_Error_Pos(bldcPos *pos, bool *dir);/* Prototipo de función para
+                                         * establecer si la posición del motor
+                                         * es correcta de acuerdo a la dirección
+                                         * del movimieno.                     */
 
 void Motor_Error(void);
 #ifdef	__cplusplus

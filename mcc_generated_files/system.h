@@ -60,6 +60,7 @@
 #include "oc5.h"
 #include "oc3.h"
 #include "tmr2.h"
+#include "tmr3.h"
 #include "interrupt_manager.h"
 #include "traps.h"
 #include "oc1.h"

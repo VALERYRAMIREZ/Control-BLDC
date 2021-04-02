@@ -76,7 +76,7 @@ int main(void) {
             {
                 bldc.S_invert(true);        
                 dPWM = 0xbb7;    
-                bldc.nextFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
+                bldc.nFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
                 bldc.S_Vel(200, bldc.sDir);
                 bldc.isRunning = true;
             }
@@ -105,6 +105,11 @@ void TMR2_CallBack(void)
     
 }
 
+void TMR3_CallBack(void)
+{
+    ERROR_LED_Toggle();
+}
+
 void CN_CallBack(void)
 {
     /* Determina si hubo un cambio de estado en la posición del motor.        */
@@ -113,13 +118,13 @@ void CN_CallBack(void)
             && bldc.initMotor && bldc.iMotor)/* Determina si la interrupción  */
     {                               /* fue debido a cambio en los sensores de
                                      * efecto Hall.                           */
-        if(Motor_Pos(&bldc.aPos, &bldc.sDir) && (bldc.initMotor || bldc.iMotor
-                || bldc.isRunning))
+        if(Motor_Error_Pos(&bldc.aPos, &bldc.sDir) && (bldc.initMotor 
+                || bldc.iMotor || bldc.isRunning))
         {
             Error_Handler(ERROR_POS);
         }
         bldc.pPos = bldc.aPos;
-        bldc.nextFase = Motor_Next_Sec(bldc.aPos, bldc.sDir);
+        bldc.nFase = Motor_Next_Sec(bldc.aPos, bldc.sDir);
         bldc.S_Vel(200, bldc.sDir);        
     }
     
@@ -142,4 +147,15 @@ void CN_CallBack(void)
         Keyboard_Previous_State(&keys);
         bldc.sMod = true;
     }
+    
+    /* Determina si la interrupción se debió a corriente fuera de rango en la
+     * etapa de potencia.                                                     */
+    
+//    if(S1_GetValue() || S2_GetValue() || S3_GetValue())
+//    {
+//        OC1CON1bits.OCFLT0 = true;
+//        OC3CON1bits.OCFLT0 = true;
+//        OC5CON1bits.OCFLT0 = true;
+//        Error_Handler(ERROR_COR);
+//    }
 }

@@ -32,9 +32,9 @@ Motor bldc =
 
 bool Motor_PWM_ON_Init(uint16_t *retardo, uint16_t *ciclo, uint16_t *periodo)
 {
-    HAB1_SetLow();
-    HAB2_SetLow();
-    HAB3_SetLow();
+//    HAB1_SetLow();
+//    HAB2_SetLow();
+//    HAB3_SetLow();
     OC2_SetHigh();
     OC4_SetHigh();
     OC9_SetHigh();
@@ -365,9 +365,15 @@ void Motor_Vel(uint16_t rpm, bool dir)
     {
         Motor_Fase_Act((bldcFases *) DD, &dir);        
     }
-    else if(rpm > 0)
+    else if((rpm > 0) && (rpm <= MAX_rpm))
     {
-        Motor_Fase_Act(&bldc.nextFase, &dir);
+        if(!bldc.isRunning)
+        {
+            HAB1_SetLow();
+            HAB2_SetLow();
+            HAB3_SetLow();
+        }        
+        Motor_Fase_Act(&bldc.nFase, &dir);
     }
 }
 
@@ -377,48 +383,6 @@ bool Motor_OC_Invert(bool invert)
     OC3CON2bits.OCINV = invert;    
     OC5CON2bits.OCINV = invert;
     return true;
-}
-
-bool Motor_Pos(bldcPos *pos, bool *dir)
-{
-    bool error = 0;
-    switch(*dir)
-    {
-        case true:
-        {
-            if(((*pos == P2) && (bldc.pPos != P1)) 
-                    || ((*pos == P3) && (bldc.pPos != P2))
-                    || ((*pos == P4) && (bldc.pPos != P3))
-                    || ((*pos == P5) && (bldc.pPos != P4))
-                    || ((*pos == P6) && (bldc.pPos != P5))
-                    || ((*pos == P1) && (bldc.pPos != P6))
-                    || (*pos == Pinv0) || (*pos == Pinv1))
-            {
-                error = true;
-            }
-        }
-        break;
-        case false:
-        {
-            if(((*pos == P6) && (bldc.pPos != P1)) 
-                    || ((*pos == P5) && (bldc.pPos != P6))
-                    || ((*pos == P4) && (bldc.pPos != P5))
-                    || ((*pos == P3) && (bldc.pPos != P4))
-                    || ((*pos == P2) && (bldc.pPos != P3))
-                    || ((*pos == P1) && (bldc.pPos != P2))
-                    || (*pos == Pinv0) || (*pos == Pinv1))
-            {
-                error = true;
-            }            
-        }
-        break;
-        default:
-        {
-            __asm("nop");
-        }
-        break;
-    }
-    return error;
 }
 
 bool Motor_Fase_Act(bldcFases *edo, bool *dir)
@@ -508,6 +472,90 @@ bldcFases Motor_Next_Sec(uint8_t hallPos, bool dir)
 //        Motor_Error();
 //    }
     return sec;
+}
+
+bool Motor_Error_Sec(bldcFases *fase, bool *dir)
+{
+    bool error = 0;
+    switch(*dir)
+    {
+        case true:
+        {
+           if(((*fase == AC) && (bldc.aFase != AB)) 
+                    || ((*fase == BC) && (bldc.aFase != AC))
+                    || ((*fase == BA) && (bldc.aFase!= BC))
+                    || ((*fase == CA) && (bldc.aFase != BA))
+                    || ((*fase == CB) && (bldc.aFase != CA))
+                    || ((*fase == AB) && (bldc.aFase != CB))
+                    || (*fase == AA) || (*fase == DD))
+            {
+                error = true;
+            }            
+        }
+        break;
+        case false:
+        {
+           if(((*fase == BC) && (bldc.aFase != AC)) 
+                    || ((*fase == BA) && (bldc.aFase != BC))
+                    || ((*fase == CA) && (bldc.aFase != BA))
+                    || ((*fase == CB) && (bldc.aFase != CA))
+                    || ((*fase == AB) && (bldc.aFase != CB))
+                    || ((*fase == AC) && (bldc.aFase != AB))
+                    || (*fase == AA) || (*fase == DD))
+            {
+                error = true;
+            }                      
+        }
+        break;
+        default:
+        {
+            
+        }
+        break;
+    }
+    return error;
+}
+
+bool Motor_Error_Pos(bldcPos *pos, bool *dir)
+{
+    bool error = 0;
+    switch(*dir)
+    {
+        case true:
+        {
+            if(((*pos == P2) && (bldc.pPos != P1)) 
+                    || ((*pos == P3) && (bldc.pPos != P2))
+                    || ((*pos == P4) && (bldc.pPos != P3))
+                    || ((*pos == P5) && (bldc.pPos != P4))
+                    || ((*pos == P6) && (bldc.pPos != P5))
+                    || ((*pos == P1) && (bldc.pPos != P6))
+                    || (*pos == Pinv0) || (*pos == Pinv1))
+            {
+                error = true;
+            }
+        }
+        break;
+        case false:
+        {
+            if(((*pos == P6) && (bldc.pPos != P1)) 
+                    || ((*pos == P5) && (bldc.pPos != P6))
+                    || ((*pos == P4) && (bldc.pPos != P5))
+                    || ((*pos == P3) && (bldc.pPos != P4))
+                    || ((*pos == P2) && (bldc.pPos != P3))
+                    || ((*pos == P1) && (bldc.pPos != P2))
+                    || (*pos == Pinv0) || (*pos == Pinv1))
+            {
+                error = true;
+            }            
+        }
+        break;
+        default:
+        {
+            __asm("nop");
+        }
+        break;
+    }
+    return error;
 }
 
 void Motor_Error(void)

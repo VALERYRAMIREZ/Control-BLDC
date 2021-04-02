@@ -68,10 +68,10 @@ static uint16_t         gOC3Mode;
 
 void OC3_Initialize (void)
 {
-    // ENFLT0 disabled; OCSIDL disabled; OCM Center-Aligned PWM mode; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Hardware or Software; 
-    OC3CON1 = 0x1C0F;
-    // SYNCSEL TMR2; TRIGSTAT disabled; OCINV disabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Cycle; FLTTRIEN disabled; 
-    OC3CON2 = 0x0C;
+    // ENFLT0 enabled; OCSIDL disabled; OCM Center-Aligned PWM mode; OCFLT0 disabled; OCTSEL FOSC/2; TRIGMODE Hardware or Software; 
+    OC3CON1 = 0x1C8F;
+    // SYNCSEL TMR2; TRIGSTAT disabled; OCINV disabled; OCTRIG Sync; OC32 disabled; FLTOUT disabled; OCTRIS disabled; FLTMD Inactive; FLTTRIEN enabled; 
+    OC3CON2 = 0xA00C;
     // CMP2B 0; 
     OC3RS = 0x00;
     // CMP1B 0; 
@@ -169,6 +169,13 @@ void OC3_ManualTriggerSet( void )
 bool OC3_TriggerStatusGet( void )
 {
     return( OC3CON2bits.TRIGSTAT );
+}
+
+
+void OC3_TriggerStatusClear( void )
+{
+    /* Clears the trigger status */
+    OC3CON2bits.TRIGSTAT = 0;
 }
 
 /**

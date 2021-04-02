@@ -66,7 +66,7 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the Output Latch SFR(s)
      ***************************************************************************/
-    LATB = 0x8000;
+    LATB = 0x0000;
     LATC = 0x0000;
     LATD = 0x0000;
     LATE = 0x0000;
@@ -76,10 +76,10 @@ void PIN_MANAGER_Initialize (void)
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
      ***************************************************************************/
-    TRISB = 0x17F0;
-    TRISC = 0x5000;
+    TRISB = 0x37F0;
+    TRISC = 0x7000;
     TRISD = 0x07DF;
-    TRISE = 0x00F0;
+    TRISE = 0x0090;
     TRISF = 0x0003;
     TRISG = 0x03C0;
 
@@ -89,14 +89,14 @@ void PIN_MANAGER_Initialize (void)
     CNPD1 = 0x0000;
     CNPD2 = 0x0000;
     CNPD3 = 0x0000;
-    CNPD4 = 0x0000;
+    CNPD4 = 0x00E0;
     CNPD5 = 0x0000;
     CNPD6 = 0x0000;
     CNPU1 = 0x00C0;
     CNPU2 = 0x0300;
     CNPU3 = 0x0000;
-    CNPU4 = 0x0000;
-    CNPU5 = 0x0100;
+    CNPU4 = 0x8000;
+    CNPU5 = 0x0101;
     CNPU6 = 0x0018;
 
     /****************************************************************************
@@ -104,7 +104,7 @@ void PIN_MANAGER_Initialize (void)
      ***************************************************************************/
     ODCB = 0x0000;
     ODCC = 0x0000;
-    ODCD = 0x0700;
+    ODCD = 0x0000;
     ODCE = 0x0000;
     ODCF = 0x0000;
     ODCG = 0x0000;
@@ -113,7 +113,7 @@ void PIN_MANAGER_Initialize (void)
      * Setting the Analog/Digital Configuration SFR(s)
      ***************************************************************************/
     AD1PCFGH = 0x0000;
-    AD1PCFGL = 0xEFFF;
+    AD1PCFGL = 0xCFFF;
     
     /****************************************************************************
      * Set the PPS
@@ -133,6 +133,9 @@ void PIN_MANAGER_Initialize (void)
     CNEN1bits.CN7IE = 1;    //Pin : RB5
     CNEN2bits.CN24IE = 1;    //Pin : RB6
     CNEN2bits.CN25IE = 1;    //Pin : RB7
+    CNEN4bits.CN50IE = 1;    //Pin : RD1
+    CNEN4bits.CN51IE = 1;    //Pin : RD2
+    CNEN4bits.CN52IE = 1;    //Pin : RD3
     CNEN4bits.CN53IE = 1;    //Pin : RD8
     CNEN4bits.CN54IE = 1;    //Pin : RD9
     CNEN4bits.CN55IE = 1;    //Pin : RD10
