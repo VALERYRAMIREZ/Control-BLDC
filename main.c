@@ -50,6 +50,7 @@
 #include "error.h"
 #include "motor.h"
 #include "teclado.h"
+#define PROTEUS_S
 /*
                          Main application
  */
@@ -150,12 +151,14 @@ void CN_CallBack(void)
     
     /* Determina si la interrupción se debió a corriente fuera de rango en la
      * etapa de potencia.                                                     */
-    
-//    if(S1_GetValue() || S2_GetValue() || S3_GetValue())
-//    {
-//        OC1CON1bits.OCFLT0 = true;
-//        OC3CON1bits.OCFLT0 = true;
-//        OC5CON1bits.OCFLT0 = true;
-//        Error_Handler(ERROR_COR);
-//    }
+
+#ifndef PROTEUS_S
+    if(S1_GetValue())
+    {
+        OC1CON1bits.OCFLT0 = true;
+        OC3CON1bits.OCFLT0 = true;
+        OC5CON1bits.OCFLT0 = true;
+        Error_Handler(ERROR_COR);
+    }
+#endif    
 }
