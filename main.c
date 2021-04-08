@@ -153,7 +153,7 @@ void CN_CallBack(void)
      * etapa de potencia.                                                     */
 
 #ifndef PROTEUS_S
-    if(S1_GetValue())
+    if(SCOR_GetValue())
     {
         OC1CON1bits.OCFLT0 = true;
         OC3CON1bits.OCFLT0 = true;
@@ -161,4 +161,14 @@ void CN_CallBack(void)
         Error_Handler(ERROR_COR);
     }
 #endif    
+    
+    /* Determina si hay error por sobretensión en la etapa de potencia.       */
+    
+    if(SVOLT_GetValue())
+    {
+        OC1CON1bits.OCFLT0 = true;
+        OC3CON1bits.OCFLT0 = true;
+        OC5CON1bits.OCFLT0 = true;
+        Error_Handler(ERROR_VOL);
+    }
 }

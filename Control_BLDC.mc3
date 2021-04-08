@@ -9,20 +9,20 @@
          <string>class com.microchip.mcc.mcu16.mainManager.MainManager</string>
       </entry>
       <entry>
-         <string>WATCHDOG</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
-      </entry>
-      <entry>
          <string>Pin Module</string>
          <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
       </entry>
       <entry>
-         <string>ICD</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
+         <string>WATCHDOG</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
       </entry>
       <entry>
          <string>RESET</string>
          <string>class com.microchip.mcc.mcu16.systemManager.reset.RESET</string>
+      </entry>
+      <entry>
+         <string>ICD</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.icd.Icd</string>
       </entry>
       <entry>
          <string>Interrupt Module</string>
@@ -49,12 +49,12 @@
          <string>class com.microchip.mcc.mcu16.modules.tmr.TMR</string>
       </entry>
       <entry>
-         <string>OC3</string>
-         <string>class com.microchip.mcc.mcu16.modules.oc.OC</string>
-      </entry>
-      <entry>
          <string>TMR2</string>
          <string>class com.microchip.mcc.mcu16.modules.tmr.TMR</string>
+      </entry>
+      <entry>
+         <string>OC3</string>
+         <string>class com.microchip.mcc.mcu16.modules.oc.OC</string>
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
@@ -1626,12 +1626,12 @@
          <value>0</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC1" registerAlias="OCCON1" settingAlias="OCTSEL" alias="TMR3"/>
-         <value>1</value>
-      </entry>
-      <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="OC5" registerAlias="OCRS" settingAlias="OCRS"/>
          <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC1" registerAlias="OCCON1" settingAlias="OCTSEL" alias="TMR3"/>
+         <value>1</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="OC3" registerAlias="OCCON1" settingAlias="TRIGMODE" alias="Hardware or Software"/>
@@ -8243,11 +8243,11 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RD1"/>
-         <value>S1</value>
+         <value>SCOR</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RD2"/>
-         <value>S2</value>
+         <value>SVOLT</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RD3"/>
@@ -10221,7 +10221,7 @@
    <generatedFileHashHistoryMap class="java.util.HashMap">
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>72f90af0fa1a7200059f8198adc759611221e99d6dd95966ef651414282d3d3a</hash>
+         <hash>71d001d48b76c23f861e2bf46721ea61286f5980880493d26004a06c85fd7dda</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.h</file>
@@ -10244,16 +10244,16 @@
          <hash>53b5af86971ee24954865e00307e8753ce669c962e8188bae8ab77d6625f0a55</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\pin_manager.h</file>
-         <hash>e1978fb766a2deb612087b64ad61b841aafb1e46cccd3d7c791125bd77b6b047</hash>
+         <file>mcc_generated_files\tmr2.c</file>
+         <hash>f307d4c4d64ea667fb079103f765b0f3efb6ea1749210d48bcb8c6eb4905a33e</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\oc5.h</file>
          <hash>efa7b5644dfa5b31279ae7b476d01f4c7f0ab033679b8eeb586539c32a0f4296</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\tmr2.c</file>
-         <hash>f307d4c4d64ea667fb079103f765b0f3efb6ea1749210d48bcb8c6eb4905a33e</hash>
+         <file>mcc_generated_files\pin_manager.h</file>
+         <hash>0a342af875b4d285281ae9ade6d670cb9673221a892c15070a864dc45b48034c</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\tmr3.c</file>
@@ -10273,7 +10273,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.c</file>
-         <hash>c588d7beeec31bf85b0431ab5a829f6f80c873f541dfc09dd785c714d7c1e0c7</hash>
+         <hash>a8e25245353ab5153c78da24c3171416e37ceb05e6e1374c539f6103f8c86721</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\oc3.c</file>
@@ -10285,7 +10285,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\system.c</file>
-         <hash>5266ea4f088f9ced0ab811af4452fbcd3d0df5199a7e823cbc6b5868eb972c33</hash>
+         <hash>ddb854b25e09ce8825922bdf67f9174c683b905ec7126769ffd9ca835e48eae4</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.c</file>
