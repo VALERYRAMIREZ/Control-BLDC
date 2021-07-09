@@ -1,8 +1,16 @@
 #include "motor.h"
 #include "mcc_generated_files/system.h"
+#include "mcc_generated_files/tmr1.h"
 
-motor PID;                              /* Estructura de tipo motot para
-                                         * almacenar los datos del PID.       */
+const cPID bldcPID =                /* Estructura de tipo motot para          */
+{                                   /* almacenar los datos del PID.           */
+    .P = 18.782676,                 /* NOTA: Los parámetros aquí introducidos */
+    .I = 0.0032101,                 /* fueron calculados usando la aplicación */
+    .D = 0.0008025,                 /* creada para calcular el control PID con*/
+};                                  /* Scilab. Se utilizó el método de Ziegler-
+                                     * Nichols con el fin de calcular los 
+                                     * coeficientes proporcinal, integral y
+                                     * derivativo.                            */
 
 /*      Declaración  de parámetros referentes al manejo del motor             */
 
@@ -22,10 +30,12 @@ Motor bldc =
     .initMotor = false,
     .iMotor = false,
     .isRunning = false,
+    .vel = 0,
     .sTipo = brushless,
     .S_Init = Motor_PWM_ON_Init,
     .S_DeInit = Motor_PWM_ON_DeInit,
     .S_Sec = Motor_PWM_ON_Sec,
+    .S_checkVel = BLDC_Motor_Check_Vel,
     .S_Vel = Motor_Vel,
     .S_invert = Motor_OC_Invert,
 };
@@ -294,57 +304,101 @@ motorInt Motor_PWM_ON_Sec(bldcFases tEstado)
 //        OC9_Start();         
 //    }
 //}
-char* Alma_PID(uint8_t nParam_2,uint8_t dato_2)/* Prototipo de función para el*/
-{                                       /* almacenamiento de los datos en     */
-    static uint8_t cDato_2 = 0;
-    static uint8_t temp_2 = 1;/* estructuras de configuración del*/
-    char *exporta = 0;                  /* PID.                               */
-    if(temp_2 != nParam_2)              /* Se reinicia cDato_1 si se cambia   */
-    {                                   /* parámetro a llenar en la estructura*/
-        cDato_2 = 0;                    /* para configurar el reloj del       */
-    }                                   /* sistema.                           */
-    switch(nParam_2)                    /* Llema el parámetro en función de la*/
-    {                                   /* función seleccionada.              */
+//char* Alma_PID(uint8_t nParam_2,uint8_t dato_2)/* Prototipo de función para el*/
+//{                                       /* almacenamiento de los datos en     */
+//    static uint8_t cDato_2 = 0;
+//    static uint8_t temp_2 = 1;/* estructuras de configuración del*/
+//    char *exporta = 0;                  /* PID.                               */
+//    if(temp_2 != nParam_2)              /* Se reinicia cDato_1 si se cambia   */
+//    {                                   /* parámetro a llenar en la estructura*/
+//        cDato_2 = 0;                    /* para configurar el reloj del       */
+//    }                                   /* sistema.                           */
+//    switch(nParam_2)                    /* Llema el parámetro en función de la*/
+//    {                                   /* función seleccionada.              */
+//        case 1:
+//        {
+//            if(cDato_2 <= 3)
+//            {
+//                PID.P[cDato_2] = dato_2;
+//                exporta = (char*) PID.P;
+//                cDato_2++;
+//            }
+//        }
+//        break;
+//        case 2:
+//        {
+//            if(cDato_2 <= 3)
+//            {
+//                PID.I[cDato_2] = dato_2;
+//                exporta = (char*) PID.I;
+//                cDato_2++;
+//            }
+//        }
+//        break;
+//        case 3:
+//        {
+//            if(cDato_2 <= 3)
+//            {
+//                PID.D[cDato_2] = dato_2;
+//                exporta = (char*) PID.D;
+//                cDato_2++;
+//            }
+//        }
+//        break;
+//        default:
+//        {
+//
+//        }
+//        break;        
+//    }
+//    temp_2 = nParam_2;                  /* Se asigna nParam_1 a temp_2 para
+//                                         * comparar en la próxima entrada a la
+//                                         * función.                           */
+//    return exporta;
+//}
+
+float BLDC_Motor_Check_Vel(uint32_t vel)
+{
+    uint16_t prescalador = 0;
+    float revTiempo = 0.0, rpm = 0.0, div4 = 0.0;
+    //float div1 = 0.0, div2 = div1, div3 = div1, div4 = div1, div5 = div1;
+    switch(T1CONbits.TCKPS)
+    {
+        case 0:
+        {
+            prescalador = 1;
+        }
+        break;
         case 1:
         {
-            if(cDato_2 <= 3)
-            {
-                PID.P[cDato_2] = dato_2;
-                exporta = (char*) PID.P;
-                cDato_2++;
-            }
+            prescalador = 8;
         }
         break;
         case 2:
         {
-            if(cDato_2 <= 3)
-            {
-                PID.I[cDato_2] = dato_2;
-                exporta = (char*) PID.I;
-                cDato_2++;
-            }
+            prescalador = 64;
         }
         break;
         case 3:
         {
-            if(cDato_2 <= 3)
-            {
-                PID.D[cDato_2] = dato_2;
-                exporta = (char*) PID.D;
-                cDato_2++;
-            }
+            prescalador = 256;
         }
         break;
         default:
         {
-
+            //No debe existir, ERROR.
         }
-        break;        
+        break;
     }
-    temp_2 = nParam_2;                  /* Se asigna nParam_1 a temp_2 para
-                                         * comparar en la próxima entrada a la
-                                         * función.                           */
-    return exporta;
+    revTiempo = 100.0*vel*prescalador*HALL_nPos*2
+            /((uint32_t) CLOCK_SystemFrequencyGet());
+    //div2 = CLOCK_SystemFrequencyGet();
+    //div3 = div1/div2;
+    //div4 = div3/div2;
+    rpm = (100*tRevCount)/revTiempo;
+    //div2 = tRevCount*((uint32_t) CLOCK_SystemFrequencyGet())/div1;
+    div4 = 1/rpm;
+    return rpm;
 }
 
 void Motor_Vel(uint16_t rpm, bool dir)

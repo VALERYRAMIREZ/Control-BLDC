@@ -50,14 +50,16 @@
 #include "error.h"
 #include "motor.h"
 #include "teclado.h"
+#include "mcc_generated_files/tmr1.h"
 #define PROTEUS_S
 /*
                          Main application
  */
-
+float vMotor = 0.0;
 int main(void) {
     SYSTEM_Initialize();
     INTERRUPT_Initialize();
+    TMR1_Counter16BitSet(0);
     Keyboard_Previous_State(&keys);
     while(1)
     {
@@ -78,7 +80,12 @@ int main(void) {
                 bldc.S_invert(true);        
                 dPWM = 0xbb7;    
                 bldc.nFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
+                //TMR1_SoftwareCounterClear();                
                 bldc.S_Vel(200, bldc.sDir);
+                bldc.tPrev = (uint32_t) TMR1_SoftwareCounterGet();
+                bldc.tPrev = (((uint32_t) (TMR1_SoftwareCounterGet())) << 16)
+                        + ((uint32_t) TMR1_Counter16BitGet());
+                //bldc.tPrev = TMR1_Counter16BitGet();
                 bldc.isRunning = true;
             }
             if(bldc.initMotor && !bldc.iMotor)
@@ -101,6 +108,10 @@ int main(void) {
     return 0;
 }
 
+void TMR1_CallBack()
+{
+    
+}
 void TMR2_CallBack(void)
 {
     
@@ -126,7 +137,15 @@ void CN_CallBack(void)
         }
         bldc.pPos = bldc.aPos;
         bldc.nFase = Motor_Next_Sec(bldc.aPos, bldc.sDir);
-        bldc.S_Vel(200, bldc.sDir);        
+        bldc.S_Vel(200, bldc.sDir);
+        bldc.tActual = (uint32_t) TMR1_SoftwareCounterGet();
+        bldc.tActual = (((uint32_t) (TMR1_SoftwareCounterGet())) << 16)
+                + ((uint32_t) TMR1_Counter16BitGet());
+        bldc.vel = bldc.tActual - bldc.tPrev;      
+        vMotor = bldc.S_checkVel(bldc.vel);
+        bldc.tPrev = (((uint32_t) (TMR1_SoftwareCounterGet())) << 16)
+                        + ((uint32_t) TMR1_Counter16BitGet());
+        //bldc.vel = 0;
     }
     
     /* Determina si se presionó un botón del teclado.                         */

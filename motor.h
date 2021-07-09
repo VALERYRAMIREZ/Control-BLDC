@@ -48,6 +48,10 @@
                                      * potencia.                              */
 #define MAX_tension_cont    3.3     /* Máxima tensión permitida en la etapa de
                                      * control.                               */
+#define HALL_nPos           12       /* Cantidad de posiciones posibles en las 
+                                     * que puede estar el motor.              */
+#define tRevCount           60      /* Cantidad de segundos para contar las
+                                     * revoluciones dadas por el motor.       */
 
 typedef enum
 {
@@ -120,9 +124,13 @@ typedef struct
     bool iMotor;                    /* Bandera para iniciar o detener el
                                      * movimiento del motor.                  */
     bool isRunning;
+    uint32_t vel;
+    uint32_t tPrev;
+    uint32_t tActual;
     bool (*S_Init) (uint16_t *, uint16_t *, uint16_t *);
     bool (*S_DeInit) (uint16_t *, uint16_t *, uint16_t *);
-    motorInt (*S_Sec) (bldcFases);  
+    motorInt (*S_Sec) (bldcFases);
+    float (*S_checkVel) (uint32_t);
     void (*S_Vel) (uint16_t, bool); /* Puntero a función para 
                                      * establecer la velocidad del motor.     */
     void (*S_Pos) (uint8_t *, bool *dir);/* Puntero a función para
@@ -132,10 +140,10 @@ typedef struct
 
 typedef struct
 {
-    uint8_t P[5];
-    uint8_t I[5];
-    uint8_t D[5];
-} motor;
+    float P;
+    float I;
+    float D;
+} cPID;
 
 /*     Definción de parámetros globales para manejo del motor.                */
 
@@ -190,6 +198,9 @@ char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
                                              * almacenamiento de los datos en
                                              * las estructuras de configuración
                                              * del PID.                       */
+
+float BLDC_Motor_Check_Vel(uint32_t vel);/* Prototipo de función para medir la
+                                         * velocidad de giro del motor.       */
 
 void Motor_Vel(uint16_t rpm, bool dir); /* Prototipo de función para establecer
                                          * la velocidad de giro y el sentido de
