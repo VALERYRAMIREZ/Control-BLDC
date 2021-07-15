@@ -37,7 +37,7 @@
 // TODO Insert C++ class definitions if appropriate
 
 // TODO Insert declarations
-#define MAX_rpm             1800    /* Velocidad nominal en r.p.m. del motor.
+#define MAX_rpm             420     /* Velocidad nominal en r.p.m. del motor.
                                      * Esta se convierte en la velocidad máxima
                                      * a la que puede girar el motor.         */
 #define MAX_corriente       2       /* Corriente máxima de fase permitida.    */
@@ -48,10 +48,21 @@
                                      * potencia.                              */
 #define MAX_tension_cont    3.3     /* Máxima tensión permitida en la etapa de
                                      * control.                               */
-#define HALL_nPos           12       /* Cantidad de posiciones posibles en las 
+#define HALL_nPos           12      /* Cantidad de posiciones posibles en las 
                                      * que puede estar el motor.              */
 #define tRevCount           60      /* Cantidad de segundos para contar las
                                      * revoluciones dadas por el motor.       */
+#define vRefConv            0.47    /* Tasa de conversión de la velocidad de 
+                                     * referencia para la función del control
+                                     * PIPD.                                  
+                                     * NOTA: por el momento tiene un valor de
+                                     * conversión arbitrario.                 */
+#define ki                  bldcPID.P/bldcPID.I
+#define Tt                  -sqrt(bldcPID.I*bldcPID.D)
+#define aI                  (1-Tt)/Tt
+#define bI                  1/Tt
+#define aD                  bldcPID.D/(bldcPID.N*h+bldcPID.D)
+#define bD                  bldcPID.P*bldcPID.D*bldcPID.N/(bldcPID.N*h+bldcPID.D)
 
 typedef enum
 {
@@ -138,11 +149,12 @@ typedef struct
     bool (*S_invert) (bool);
 } Motor;
 
-typedef struct
-{
-    float P;
-    float I;
-    float D;
+typedef struct                      /* Estructura para almacenar los          */
+{                                   /* coeficientes calculador con método Z-N,*/
+    float P;                        /* para luego calcular los coeficientes   */
+    float I;                        /* del controlador PIPD a utilizar en la  */
+    float D;                        /* respectiva función.                    */
+    uint16_t N;                     /* Orden del filtro derivativo.           */
 } cPID;
 
 /*     Definción de parámetros globales para manejo del motor.                */
@@ -206,6 +218,10 @@ void Motor_Vel(uint16_t rpm, bool dir); /* Prototipo de función para establecer
                                          * la velocidad de giro y el sentido de
                                          * giro del motor.                    */
 
+float Motor_PIPD(uint16_t pRpm, uint16_t lRpm, uint32_t h);/* Prototipo de 
+                                     * función basada en un control PIPD la cual
+                                     * calcula el ciclo de trabajo del PWM para
+                                     * alcanzar la velocidad establecida.     */
 bool Motor_OC_Invert(bool invert);
 
 bool Motor_Fase_Act(bldcFases *edo, bool *dir);

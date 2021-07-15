@@ -109,7 +109,7 @@
       <C30>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
-        <property key="data-model" value="default"/>
+        <property key="data-model" value="small-data"/>
         <property key="disable-instruction-scheduling" value="false"/>
         <property key="enable-all-warnings" value="true"/>
         <property key="enable-ansi-std" value="false"/>
@@ -121,6 +121,7 @@
         <property key="enable-short-double" value="false"/>
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
+        <property key="expand-pragma-config" value="false"/>
         <property key="extra-include-directories" value=""/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
@@ -170,6 +171,7 @@
       </C30-AS>
       <C30-CO>
         <property key="coverage-enable" value=""/>
+        <property key="stack-guidance" value="false"/>
       </C30-CO>
       <C30-LD>
         <property key="additional-options-use-response-files" value="false"/>

@@ -1,12 +1,14 @@
 #include "motor.h"
 #include "mcc_generated_files/system.h"
 #include "mcc_generated_files/tmr1.h"
+#include <math.h>
 
 const cPID bldcPID =                /* Estructura de tipo motot para          */
 {                                   /* almacenar los datos del PID.           */
     .P = 18.782676,                 /* NOTA: Los parámetros aquí introducidos */
     .I = 0.0032101,                 /* fueron calculados usando la aplicación */
     .D = 0.0008025,                 /* creada para calcular el control PID con*/
+    .N = 2
 };                                  /* Scilab. Se utilizó el método de Ziegler-
                                      * Nichols con el fin de calcular los 
                                      * coeficientes proporcinal, integral y
@@ -360,8 +362,7 @@ motorInt Motor_PWM_ON_Sec(bldcFases tEstado)
 float BLDC_Motor_Check_Vel(uint32_t vel)
 {
     uint16_t prescalador = 0;
-    float revTiempo = 0.0, rpm = 0.0, div4 = 0.0;
-    //float div1 = 0.0, div2 = div1, div3 = div1, div4 = div1, div5 = div1;
+    float revTiempo = 0.0, rpmProm = 0.0;
     switch(T1CONbits.TCKPS)
     {
         case 0:
@@ -392,20 +393,15 @@ float BLDC_Motor_Check_Vel(uint32_t vel)
     }
     revTiempo = 100.0*vel*prescalador*HALL_nPos*2
             /((uint32_t) CLOCK_SystemFrequencyGet());
-    //div2 = CLOCK_SystemFrequencyGet();
-    //div3 = div1/div2;
-    //div4 = div3/div2;
-    rpm = (100*tRevCount)/revTiempo;
-    //div2 = tRevCount*((uint32_t) CLOCK_SystemFrequencyGet())/div1;
-    div4 = 1/rpm;
-    return rpm;
+    rpmProm = (100*tRevCount)/revTiempo;
+    return rpmProm;
 }
 
 void Motor_Vel(uint16_t rpm, bool dir)
 {
     if(MAX_rpm < rpm)
     {
-        /* Se debe hacer una unción para mostrar en pantalla que se alcanzó la
+        /* Se debe hacer una función para mostrar en pantalla que se alcanzó la
          * velocidad máxima permitida para el motor.                          */
         rpm = MAX_rpm;
     }
@@ -429,6 +425,51 @@ void Motor_Vel(uint16_t rpm, bool dir)
         }        
         Motor_Fase_Act(&bldc.nFase, &dir);
     }
+}
+
+float Motor_PIPD(uint16_t pRpm, uint16_t lRpm, uint32_t h)/* Función basada*/
+{                                   /* en un control PIPD la cual calcula el  */
+                                    /* ciclo de trabajo del PWM para alcanzar */
+                                    /* la velocidad establecida.              */
+
+/*******************Estos parámetros se calculan una sola vez******************/
+    
+    /*static float ki = bldcPID.P/bldcPID.I;
+    static float Tt = -sqrt(bldcPID.I*bldcPID.D);
+    static float aI = (1-Tt)/Tt;
+    static float bI = 1/Tt;
+    static float aD = bldcPID.D/(bldcPID.N*h+bldcPID.D);
+    static float bD = bldcPID.P*bldcPID.D*bldcPID.N/(bldcPID.N*h+bldcPID.D);*/
+    
+/***Estos parámetros se inicializan en cero y se actualizan en el apartado de***
+ ********************proceso de la función del controlador*********************/
+    
+    static float yktMenos = 0.0;
+    static float PDtk = 0.0;
+    static float itk = 0.0;
+    static float vtk = 0.0;
+    
+/***********Estos parámetros se destruyen al finalizar la función**************/
+    
+    float etk = 0.0;
+    float eitk = 0.0;
+    float PItk = 0.0;
+    
+/******Este es el apartado de proceso de la función del controlador PIPD*******/
+    
+    etk = pRpm - lRpm;
+    eitk = lRpm - vtk;
+
+/*******Los macros aD y bD utilizan el intervalo de muestreo del sistema,
+        razón por la cual debe establecerse dicha frecuencia antes de aplicar
+        estas operaciones.*****************************************************/
+    
+    itk = itk + ki*h*(pRpm + aI*lRpm - bI*vtk);
+    PItk = itk + etk*bldcPID.P;/* Controlador PI.          */
+    PDtk = lRpm + aD*PDtk + bD*(lRpm - yktMenos);/* Controlador PD.           */
+    vtk = PItk + PDtk;              /* Salida del controlador PIPD.           */
+    yktMenos = lRpm;
+    return vtk;
 }
 
 bool Motor_OC_Invert(bool invert)

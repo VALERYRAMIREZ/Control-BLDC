@@ -79,13 +79,10 @@ int main(void) {
             {
                 bldc.S_invert(true);        
                 dPWM = 0xbb7;    
-                bldc.nFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);
-                //TMR1_SoftwareCounterClear();                
+                bldc.nFase = Motor_Next_Sec(bldc.pPos, bldc.sDir);               
                 bldc.S_Vel(200, bldc.sDir);
-                bldc.tPrev = (uint32_t) TMR1_SoftwareCounterGet();
-                bldc.tPrev = (((uint32_t) (TMR1_SoftwareCounterGet())) << 16)
+                bldc.tPrev = (((uint32_t) (TMR1_SoftwareCounterGet()))*PR1)
                         + ((uint32_t) TMR1_Counter16BitGet());
-                //bldc.tPrev = TMR1_Counter16BitGet();
                 bldc.isRunning = true;
             }
             if(bldc.initMotor && !bldc.iMotor)
@@ -130,6 +127,8 @@ void CN_CallBack(void)
             && bldc.initMotor && bldc.iMotor)/* Determina si la interrupción  */
     {                               /* fue debido a cambio en los sensores de
                                      * efecto Hall.                           */
+        bldc.tActual = (((uint32_t) (TMR1_SoftwareCounterGet()))*PR1)
+                + ((uint32_t) TMR1_Counter16BitGet());
         if(Motor_Error_Pos(&bldc.aPos, &bldc.sDir) && (bldc.initMotor 
                 || bldc.iMotor || bldc.isRunning))
         {
@@ -138,13 +137,9 @@ void CN_CallBack(void)
         bldc.pPos = bldc.aPos;
         bldc.nFase = Motor_Next_Sec(bldc.aPos, bldc.sDir);
         bldc.S_Vel(200, bldc.sDir);
-        bldc.tActual = (uint32_t) TMR1_SoftwareCounterGet();
-        bldc.tActual = (((uint32_t) (TMR1_SoftwareCounterGet())) << 16)
-                + ((uint32_t) TMR1_Counter16BitGet());
         bldc.vel = bldc.tActual - bldc.tPrev;      
         vMotor = bldc.S_checkVel(bldc.vel);
-        bldc.tPrev = (((uint32_t) (TMR1_SoftwareCounterGet())) << 16)
-                        + ((uint32_t) TMR1_Counter16BitGet());
+        bldc.tPrev = bldc.tActual;
         //bldc.vel = 0;
     }
     

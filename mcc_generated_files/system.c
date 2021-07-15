@@ -72,14 +72,14 @@
 #include "pin_manager.h"
 #include "clock.h"
 #include "system.h"
-#include "oc1.h"
-#include "oc3.h"
-#include "tmr3.h"
 #include "oc5.h"
-#include "tmr2.h"
-#include "tmr1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "oc3.h"
+#include "tmr3.h"
+#include "oc1.h"
+#include "tmr2.h"
+#include "tmr1.h"
 
 void SYSTEM_Initialize(void)
 {
