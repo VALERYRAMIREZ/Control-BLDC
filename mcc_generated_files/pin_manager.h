@@ -640,6 +640,152 @@
 #define E_SetDigitalOutput() (_TRISB11 = 0)
 /**
   @Summary
+    Sets the GPIO pin, RB12, high using LATB12.
+
+  @Description
+    Sets the GPIO pin, RB12, high using LATB12.
+
+  @Preconditions
+    The RB12 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB12 high (1)
+    REFV_SetHigh();
+    </code>
+
+*/
+#define REFV_SetHigh()          (_LATB12 = 1)
+/**
+  @Summary
+    Sets the GPIO pin, RB12, low using LATB12.
+
+  @Description
+    Sets the GPIO pin, RB12, low using LATB12.
+
+  @Preconditions
+    The RB12 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB12 low (0)
+    REFV_SetLow();
+    </code>
+
+*/
+#define REFV_SetLow()           (_LATB12 = 0)
+/**
+  @Summary
+    Toggles the GPIO pin, RB12, using LATB12.
+
+  @Description
+    Toggles the GPIO pin, RB12, using LATB12.
+
+  @Preconditions
+    The RB12 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RB12
+    REFV_Toggle();
+    </code>
+
+*/
+#define REFV_Toggle()           (_LATB12 ^= 1)
+/**
+  @Summary
+    Reads the value of the GPIO pin, RB12.
+
+  @Description
+    Reads the value of the GPIO pin, RB12.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RB12
+    postValue = REFV_GetValue();
+    </code>
+
+*/
+#define REFV_GetValue()         _RB12
+/**
+  @Summary
+    Configures the GPIO pin, RB12, as an input.
+
+  @Description
+    Configures the GPIO pin, RB12, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB12 as an input
+    REFV_SetDigitalInput();
+    </code>
+
+*/
+#define REFV_SetDigitalInput()  (_TRISB12 = 1)
+/**
+  @Summary
+    Configures the GPIO pin, RB12, as an output.
+
+  @Description
+    Configures the GPIO pin, RB12, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB12 as an output
+    REFV_SetDigitalOutput();
+    </code>
+
+*/
+#define REFV_SetDigitalOutput() (_TRISB12 = 0)
+/**
+  @Summary
     Sets the GPIO pin, RB15, high using LATB15.
 
   @Description

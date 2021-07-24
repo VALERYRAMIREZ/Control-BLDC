@@ -424,22 +424,14 @@ void Motor_Vel(uint16_t rpm, bool dir)
             HAB3_SetLow();
         }        
         Motor_Fase_Act(&bldc.nFase, &dir);
+        //dPWM = Motor_PIPD()
     }
 }
 
-float Motor_PIPD(uint16_t pRpm, uint16_t lRpm, uint32_t h)/* Función basada*/
+float Motor_PIPD(uint32_t pRpm, uint32_t lRpm, uint32_t h)/* Función basada*/
 {                                   /* en un control PIPD la cual calcula el  */
                                     /* ciclo de trabajo del PWM para alcanzar */
                                     /* la velocidad establecida.              */
-
-/*******************Estos parámetros se calculan una sola vez******************/
-    
-    /*static float ki = bldcPID.P/bldcPID.I;
-    static float Tt = -sqrt(bldcPID.I*bldcPID.D);
-    static float aI = (1-Tt)/Tt;
-    static float bI = 1/Tt;
-    static float aD = bldcPID.D/(bldcPID.N*h+bldcPID.D);
-    static float bD = bldcPID.P*bldcPID.D*bldcPID.N/(bldcPID.N*h+bldcPID.D);*/
     
 /***Estos parámetros se inicializan en cero y se actualizan en el apartado de***
  ********************proceso de la función del controlador*********************/

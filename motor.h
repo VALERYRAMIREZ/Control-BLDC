@@ -37,7 +37,7 @@
 // TODO Insert C++ class definitions if appropriate
 
 // TODO Insert declarations
-#define MAX_rpm             420     /* Velocidad nominal en r.p.m. del motor.
+#define MAX_rpm             2500    /* Velocidad nominal en r.p.m. del motor.
                                      * Esta se convierte en la velocidad máxima
                                      * a la que puede girar el motor.         */
 #define MAX_corriente       2       /* Corriente máxima de fase permitida.    */
@@ -218,7 +218,7 @@ void Motor_Vel(uint16_t rpm, bool dir); /* Prototipo de función para establecer
                                          * la velocidad de giro y el sentido de
                                          * giro del motor.                    */
 
-float Motor_PIPD(uint16_t pRpm, uint16_t lRpm, uint32_t h);/* Prototipo de 
+float Motor_PIPD(uint32_t pRpm, uint32_t lRpm, uint32_t h);/* Prototipo de 
                                      * función basada en un control PIPD la cual
                                      * calcula el ciclo de trabajo del PWM para
                                      * alcanzar la velocidad establecida.     */
