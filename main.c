@@ -56,8 +56,7 @@
 /*
                          Main application
  */
-float vMotor = 0.0;
-uint16_t lecturaADC = 0;
+float vMotor = 0.0, rRPM = 0;
 int main(void) {
     SYSTEM_Initialize();
     ADC1_InterruptPrioritySet(0x05);
@@ -114,14 +113,14 @@ int main(void) {
 
 void TMR1_CallBack(void)
 {
+    if(bldc.rVel > 0)
+    {
+        rRPM = vRefConv*bldc.rVel;
+    }
     if(bldc.isRunning && !AD1CON1bits.SAMP)
     {
         ADC1_Start();
     }
-    /*else if(bldc.isRunning && AD1CON1bits.SAMP)
-    {
-        ADC1_Stop();
-    }*/
 }
 void TMR2_CallBack(void)
 {
@@ -203,7 +202,7 @@ void CN_CallBack(void)
 
 void ADC1_CallBack(void)
 {
-    ADC1_ConversionResultBufferGet(&lecturaADC);
+    ADC1_ConversionResultBufferGet(&bldc.rVel);
     ADC1_InterruptFlagClear();
     ADC1_Stop();
 }

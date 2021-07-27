@@ -32,6 +32,7 @@ Motor bldc =
     .initMotor = false,
     .iMotor = false,
     .isRunning = false,
+    .rVel = 0.0,
     .vel = 0,
     .sTipo = brushless,
     .S_Init = Motor_PWM_ON_Init,

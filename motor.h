@@ -52,7 +52,7 @@
                                      * que puede estar el motor.              */
 #define tRevCount           60      /* Cantidad de segundos para contar las
                                      * revoluciones dadas por el motor.       */
-#define vRefConv            0.47    /* Tasa de conversión de la velocidad de 
+#define vRefConv            2.44    /* Tasa de conversión de la velocidad de 
                                      * referencia para la función del control
                                      * PIPD.                                  
                                      * NOTA: por el momento tiene un valor de
@@ -135,6 +135,7 @@ typedef struct
     bool iMotor;                    /* Bandera para iniciar o detener el
                                      * movimiento del motor.                  */
     bool isRunning;
+    uint16_t rVel;
     uint32_t vel;
     uint32_t tPrev;
     uint32_t tActual;
